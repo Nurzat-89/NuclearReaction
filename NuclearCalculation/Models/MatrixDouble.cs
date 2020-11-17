@@ -12,7 +12,10 @@ namespace NuclearCalculation.Models
         {
 
         }
+        public MatrixDouble()
+        {
 
+        }
         protected override Matrix<double> Add(Matrix<double> A)
         {
             MatrixDouble result = new MatrixDouble(A.Col, A.Row);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -18,7 +19,40 @@ namespace NuclearCalculation.Models
             Row = row;
             Arr = new T[col, row];
         }
+        public Matrix()
+        {
 
+        }
+        public void SetMatrix(int col, int row)
+        {
+            Col = col;
+            Row = row;
+            Arr = new T[col, row];
+        }
+        public Matrix<T2> Cast<T2>() where T2 : struct
+        {
+            var matrixType = Globals.MatrixTypes[typeof(T2)]; 
+            var instance = Activator.CreateInstance(matrixType) as Matrix<T2>;
+            instance.SetMatrix(Col, Row);
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    dynamic value = null;
+                    if(typeof(T2) == typeof(Complex))
+                    {
+                        value = new Complex((double)Convert.ChangeType(Arr[i, j], typeof(double)), 0.0);
+                    }
+                    if (typeof(T2) == typeof(double))
+                    {
+                        value = ((Complex)Convert.ChangeType(Arr[i, j], typeof(Complex))).Real;
+                    }
+                    if (value != null)
+                        instance.Arr[i, j] = (T2)Convert.ChangeType(value, typeof(T2));
+                }
+            }
+            return instance;
+        }
         protected abstract Matrix<T> Add(Matrix<T> A);
         protected abstract Matrix<T> Substract(Matrix<T> A);
         protected abstract Matrix<T> Multiply(Matrix<T> A);

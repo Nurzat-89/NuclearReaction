@@ -16,20 +16,7 @@ namespace TestConsole
         static void Main(string[] args)
         {
 
-            Endf endfB = new EndfB();
-            var isotopes = new List<Isotope>();
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 205));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 206));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 207));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 208));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 83 && x.A == 208));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 83 && x.A == 209));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 83 && x.A == 210));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 84 && x.A == 210));
-            isotopes.Add(endfB?.Isotopes?.FirstOrDefault(x => x.Z == 84 && x.A == 211));
-            var flux = new NeutronSpectra(1.0E13, 300);
-            var burnUp = new BurnUp(isotopes, flux);
-
+            var reactor = new Reactor();
             //File.Move("oldfilename", "newfilename");
 
 

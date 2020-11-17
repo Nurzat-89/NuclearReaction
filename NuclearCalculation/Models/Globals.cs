@@ -72,7 +72,10 @@ namespace NuclearCalculation.Models
             new Complex(AlphaReal[6], AlphaImag[6]),
             new Complex(AlphaReal[7], AlphaImag[7]),
         };
-
+        public static Dictionary<Type, Type > MatrixTypes = new Dictionary<Type, Type>() {
+            {typeof(double), typeof(MatrixDouble) },
+            {typeof(Complex), typeof(MatrixComplex) },
+        }; 
         public static int Factorial(int n)
         {
             int s = 1;

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Models\BurnUp.cs" />
     <Compile Include="Models\Cram.cs" />
+    <Compile Include="Models\DensityArray.cs" />
     <Compile Include="Models\Globals.cs" />
     <Compile Include="Models\IExponent.cs" />
     <Compile Include="Models\Matrix.cs" />

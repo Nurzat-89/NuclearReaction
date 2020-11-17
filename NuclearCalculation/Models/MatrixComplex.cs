@@ -13,7 +13,10 @@ namespace NuclearCalculation.Models
         {
 
         }
+        public MatrixComplex()
+        {
 
+        }
         public override Matrix<Complex> Pow(int p)
         {
             Matrix<Complex> result = new MatrixComplex(Col, Row);
