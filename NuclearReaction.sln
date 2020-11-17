@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearReaction", "NuclearReaction\NuclearReaction.csproj", "{F64ACE9E-ACA5-4C1B-949F-3C6A5BB1995A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearData", "NuclearData\NuclearData.csproj", "{5A775442-132C-4A7E-92B1-D8311F7EB5E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{87EA4325-3CF1-4A02-85A0-D1A8FD4F8FFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KazNuclide", "KazNuclide\KazNuclide.csproj", "{B14D70D9-0A0F-4271-8D1A-19F1C883D8D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearCalculation", "NuclearCalculation\NuclearCalculation.csproj", "{A95599E8-34FB-4830-9ED5-C768BFED3E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{F64ACE9E-ACA5-4C1B-949F-3C6A5BB1995A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F64ACE9E-ACA5-4C1B-949F-3C6A5BB1995A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F64ACE9E-ACA5-4C1B-949F-3C6A5BB1995A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A775442-132C-4A7E-92B1-D8311F7EB5E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A775442-132C-4A7E-92B1-D8311F7EB5E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A775442-132C-4A7E-92B1-D8311F7EB5E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A775442-132C-4A7E-92B1-D8311F7EB5E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87EA4325-3CF1-4A02-85A0-D1A8FD4F8FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87EA4325-3CF1-4A02-85A0-D1A8FD4F8FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87EA4325-3CF1-4A02-85A0-D1A8FD4F8FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87EA4325-3CF1-4A02-85A0-D1A8FD4F8FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B14D70D9-0A0F-4271-8D1A-19F1C883D8D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B14D70D9-0A0F-4271-8D1A-19F1C883D8D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B14D70D9-0A0F-4271-8D1A-19F1C883D8D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B14D70D9-0A0F-4271-8D1A-19F1C883D8D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95599E8-34FB-4830-9ED5-C768BFED3E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95599E8-34FB-4830-9ED5-C768BFED3E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95599E8-34FB-4830-9ED5-C768BFED3E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95599E8-34FB-4830-9ED5-C768BFED3E79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

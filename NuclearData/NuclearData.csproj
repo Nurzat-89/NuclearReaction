@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5A775442-132C-4A7E-92B1-D8311F7EB5E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NuclearData</RootNamespace>
+    <AssemblyName>NuclearData</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Models\CrossSection.cs" />
+    <Compile Include="Models\CrossSectionValue.cs" />
+    <Compile Include="Models\DecayDataReader.cs" />
+    <Compile Include="Models\Element.cs" />
+    <Compile Include="Models\Endf.cs" />
+    <Compile Include="Models\EndfB.cs" />
+    <Compile Include="Models\Globals.cs" />
+    <Compile Include="Models\INuclearDataReader.cs" />
+    <Compile Include="Models\IReaction.cs" />
+    <Compile Include="Models\Isotope.cs" />
+    <Compile Include="Models\Decay.cs" />
+    <Compile Include="Models\Jeff.cs" />
+    <Compile Include="Models\Jendl.cs" />
+    <Compile Include="Models\Neutron.cs" />
+    <Compile Include="Models\NeutronDataReader.cs" />
+    <Compile Include="Models\NeutronSpectra.cs" />
+    <Compile Include="Models\NuclearDataReader.cs" />
+    <Compile Include="Models\Nuclide.cs" />
+    <Compile Include="Models\Particle.cs" />
+    <Compile Include="Models\Photon.cs" />
+    <Compile Include="Models\Proton.cs" />
+    <Compile Include="Models\Reaction.cs" />
+    <Compile Include="Models\Reaction_n2n.cs" />
+    <Compile Include="Models\Reaction_ng.cs" />
+    <Compile Include="Models\Reaction_np.cs" />
+    <Compile Include="Models\Record.cs" />
+    <Compile Include="Models\Tendl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
