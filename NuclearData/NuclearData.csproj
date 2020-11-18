@@ -55,11 +55,15 @@
     <Compile Include="Models\Decay.cs" />
     <Compile Include="Models\Jeff.cs" />
     <Compile Include="Models\Jendl.cs" />
+    <Compile Include="Models\N2NdataReader.cs" />
+    <Compile Include="Models\NAdataReader.cs" />
     <Compile Include="Models\Neutron.cs" />
     <Compile Include="Models\NeutronDataReader.cs" />
     <Compile Include="Models\NeutronSpectra.cs" />
+    <Compile Include="Models\NPdataReader.cs" />
     <Compile Include="Models\NuclearDataReader.cs" />
     <Compile Include="Models\Nuclide.cs" />
+    <Compile Include="Models\N_el_DataReader.cs" />
     <Compile Include="Models\Particle.cs" />
     <Compile Include="Models\Photon.cs" />
     <Compile Include="Models\Proton.cs" />

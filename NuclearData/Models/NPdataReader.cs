@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +7,12 @@ using static NuclearData.Constants;
 
 namespace NuclearData.Models
 {
-    public class NeutronDataReader : NuclearDataReader
+    public class NPdataReader:NuclearDataReader
     {
-        public NeutronDataReader()
+        public NPdataReader()
         {
             MF = 3;
-            MT = 102;
+            MT = 103;
             ReactionType = FILETYP.NEUTRON;
         }
     }

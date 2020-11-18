@@ -29,71 +29,58 @@
         private void InitializeComponent()
         {
             this.ElementName = new System.Windows.Forms.Label();
-            this.NumberText = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.ZNumber = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ElementName
             // 
-            this.ElementName.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ElementName.ForeColor = System.Drawing.Color.White;
-            this.ElementName.Location = new System.Drawing.Point(6, 11);
+            this.ElementName.AutoSize = true;
+            this.ElementName.BackColor = System.Drawing.Color.Transparent;
+            this.ElementName.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ElementName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ElementName.Location = new System.Drawing.Point(4, 12);
             this.ElementName.Name = "ElementName";
-            this.ElementName.Size = new System.Drawing.Size(37, 30);
+            this.ElementName.Size = new System.Drawing.Size(32, 19);
             this.ElementName.TabIndex = 0;
             this.ElementName.Text = "He";
             this.ElementName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ElementName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ElementName_MouseDown);
+            this.ElementName.MouseEnter += new System.EventHandler(this.ElementName_MouseEnter);
+            this.ElementName.MouseLeave += new System.EventHandler(this.ElementName_MouseLeave);
             // 
-            // NumberText
+            // ZNumber
             // 
-            this.NumberText.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NumberText.ForeColor = System.Drawing.Color.White;
-            this.NumberText.Location = new System.Drawing.Point(-4, -5);
-            this.NumberText.Name = "NumberText";
-            this.NumberText.Size = new System.Drawing.Size(28, 25);
-            this.NumberText.TabIndex = 1;
-            this.NumberText.Text = "82";
-            this.NumberText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(41, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2, 45);
-            this.panel1.TabIndex = 2;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 43);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(41, 2);
-            this.flowLayoutPanel1.TabIndex = 3;
+            this.ZNumber.AutoSize = true;
+            this.ZNumber.BackColor = System.Drawing.Color.Transparent;
+            this.ZNumber.Font = new System.Drawing.Font("Century Gothic", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ZNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ZNumber.Location = new System.Drawing.Point(-1, 0);
+            this.ZNumber.Name = "ZNumber";
+            this.ZNumber.Size = new System.Drawing.Size(19, 15);
+            this.ZNumber.TabIndex = 1;
+            this.ZNumber.Text = "82";
+            this.ZNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ZNumber.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ElementName_MouseDown);
+            this.ZNumber.MouseEnter += new System.EventHandler(this.ElementName_MouseEnter);
+            this.ZNumber.MouseLeave += new System.EventHandler(this.ElementName_MouseLeave);
             // 
             // ElementView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.NumberText);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Controls.Add(this.ZNumber);
             this.Controls.Add(this.ElementName);
             this.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "ElementView";
-            this.Size = new System.Drawing.Size(43, 45);
+            this.Size = new System.Drawing.Size(38, 38);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ElementName_MouseDown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label NumberText;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         public System.Windows.Forms.Label ElementName;
+        public System.Windows.Forms.Label ZNumber;
     }
 }

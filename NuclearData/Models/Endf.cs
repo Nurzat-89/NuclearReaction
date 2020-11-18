@@ -19,6 +19,8 @@ namespace NuclearData.Models
             Isotopes = new List<Isotope>();
             NuclearData.Add(new DecayDataReader());
             NuclearData.Add(new NeutronDataReader());
+            NuclearData.Add(new N2NdataReader());
+            NuclearData.Add(new NPdataReader());
         }
 
         protected void InitializeIsotopes() 

@@ -13,7 +13,7 @@ namespace NuclearData
         public int DecayTypes => Decays.Count;
         public string Name => $"{Constants.ElementNames[Z]}-{A}"; 
         public string ElementName => Constants.ElementNames[Z];
-        public bool Stable => Decays.Count != 0;
+        public bool Stable => Decays.Count == 0;
         public double HalfLife { get; set; }
         public double DecayConst => Constants.ln2 / HalfLife;
         public Dictionary<Constants.RTYPE, Decay> Decays { get; set; }

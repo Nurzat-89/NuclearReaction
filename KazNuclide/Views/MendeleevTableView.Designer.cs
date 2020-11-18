@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
+            this.MendeleevTablePanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.elementView4 = new KazNuclide.Views.ElementView();
-            this.elementView3 = new KazNuclide.Views.ElementView();
-            this.elementView2 = new KazNuclide.Views.ElementView();
-            this.elementView1 = new KazNuclide.Views.ElementView();
+            this.isotopesListView = new System.Windows.Forms.ListBox();
+            this.ElementNameLabel = new System.Windows.Forms.Label();
+            this.isotopeInfoPanel = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,85 +44,89 @@
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(648, 36);
+            this.label1.Size = new System.Drawing.Size(1224, 38);
             this.label1.TabIndex = 0;
             this.label1.Text = "Mendeleev Table";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // MendeleevTablePanel
+            // 
+            this.MendeleevTablePanel.AutoScroll = true;
+            this.MendeleevTablePanel.AutoSize = true;
+            this.MendeleevTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MendeleevTablePanel.Location = new System.Drawing.Point(166, 38);
+            this.MendeleevTablePanel.Name = "MendeleevTablePanel";
+            this.MendeleevTablePanel.Size = new System.Drawing.Size(1058, 594);
+            this.MendeleevTablePanel.TabIndex = 1;
+            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.elementView4);
-            this.panel1.Controls.Add(this.elementView3);
-            this.panel1.Controls.Add(this.elementView2);
-            this.panel1.Controls.Add(this.elementView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 36);
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.isotopesListView);
+            this.panel1.Controls.Add(this.ElementNameLabel);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 38);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(648, 412);
-            this.panel1.TabIndex = 1;
+            this.panel1.Size = new System.Drawing.Size(164, 594);
+            this.panel1.TabIndex = 2;
             // 
-            // elementView4
+            // isotopesListView
             // 
-            this.elementView4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.elementView4.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.elementView4.Location = new System.Drawing.Point(130, 3);
-            this.elementView4.Name = "elementView4";
-            this.elementView4.Number = 0;
-            this.elementView4.Size = new System.Drawing.Size(43, 45);
-            this.elementView4.TabIndex = 3;
+            this.isotopesListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.isotopesListView.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.isotopesListView.FormattingEnabled = true;
+            this.isotopesListView.ItemHeight = 20;
+            this.isotopesListView.Location = new System.Drawing.Point(0, 34);
+            this.isotopesListView.Name = "isotopesListView";
+            this.isotopesListView.Size = new System.Drawing.Size(162, 558);
+            this.isotopesListView.TabIndex = 0;
+            this.isotopesListView.SelectedIndexChanged += new System.EventHandler(this.isotopesListView_SelectedIndexChanged);
             // 
-            // elementView3
+            // ElementNameLabel
             // 
-            this.elementView3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.elementView3.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.elementView3.Location = new System.Drawing.Point(88, 3);
-            this.elementView3.Name = "elementView3";
-            this.elementView3.Number = 0;
-            this.elementView3.Size = new System.Drawing.Size(43, 45);
-            this.elementView3.TabIndex = 2;
+            this.ElementNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ElementNameLabel.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ElementNameLabel.Location = new System.Drawing.Point(0, 0);
+            this.ElementNameLabel.Name = "ElementNameLabel";
+            this.ElementNameLabel.Size = new System.Drawing.Size(162, 34);
+            this.ElementNameLabel.TabIndex = 0;
+            this.ElementNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // elementView2
+            // isotopeInfoPanel
             // 
-            this.elementView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.elementView2.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.elementView2.Location = new System.Drawing.Point(46, 3);
-            this.elementView2.Name = "elementView2";
-            this.elementView2.Number = 0;
-            this.elementView2.Size = new System.Drawing.Size(43, 45);
-            this.elementView2.TabIndex = 1;
-            // 
-            // elementView1
-            // 
-            this.elementView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.elementView1.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.elementView1.Location = new System.Drawing.Point(4, 3);
-            this.elementView1.Name = "elementView1";
-            this.elementView1.Number = 0;
-            this.elementView1.Size = new System.Drawing.Size(43, 45);
-            this.elementView1.TabIndex = 0;
+            this.isotopeInfoPanel.AutoSize = true;
+            this.isotopeInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.isotopeInfoPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.isotopeInfoPanel.Location = new System.Drawing.Point(164, 38);
+            this.isotopeInfoPanel.Name = "isotopeInfoPanel";
+            this.isotopeInfoPanel.Size = new System.Drawing.Size(2, 594);
+            this.isotopeInfoPanel.TabIndex = 3;
             // 
             // MendeleevTableView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(179)))));
+            this.Controls.Add(this.MendeleevTablePanel);
+            this.Controls.Add(this.isotopeInfoPanel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "MendeleevTableView";
-            this.Size = new System.Drawing.Size(648, 448);
+            this.Size = new System.Drawing.Size(1224, 632);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel MendeleevTablePanel;
         private System.Windows.Forms.Panel panel1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ElementView elementView4;
-        private ElementView elementView3;
-        private ElementView elementView2;
-        private ElementView elementView1;
+        private System.Windows.Forms.ListBox isotopesListView;
+        private System.Windows.Forms.Label ElementNameLabel;
+        private System.Windows.Forms.Panel isotopeInfoPanel;
     }
 }
