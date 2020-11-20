@@ -16,7 +16,7 @@ namespace TestConsole
         static void Main(string[] args)
         {
 
-            var reactor = new Reactor();
+            //var reactor = new Reactor();
             //File.Move("oldfilename", "newfilename");
 
 

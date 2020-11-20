@@ -47,6 +47,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=1.0.1812.29779, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ZedGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainForm.cs">
@@ -57,6 +61,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\CalculationView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CalculationView.Designer.cs">
+      <DependentUpon>CalculationView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\CrossSectionInfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -74,6 +84,12 @@
     </Compile>
     <Compile Include="Views\ElementView.Designer.cs">
       <DependentUpon>ElementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphControlView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\GraphControlView.Designer.cs">
+      <DependentUpon>GraphControlView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IsotopeInfoView.cs">
       <SubType>UserControl</SubType>
@@ -118,6 +134,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\CalculationView.resx">
+      <DependentUpon>CalculationView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CrossSectionInfoView.resx">
       <DependentUpon>CrossSectionInfoView.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ElementView.resx">
       <DependentUpon>ElementView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GraphControlView.resx">
+      <DependentUpon>GraphControlView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\IsotopeInfoView.resx">
       <DependentUpon>IsotopeInfoView.cs</DependentUpon>
@@ -156,6 +178,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NuclearCalculation\NuclearCalculation.csproj">
+      <Project>{A95599E8-34FB-4830-9ED5-C768BFED3E79}</Project>
+      <Name>NuclearCalculation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NuclearData\NuclearData.csproj">
       <Project>{5A775442-132C-4A7E-92B1-D8311F7EB5E2}</Project>
       <Name>NuclearData</Name>
@@ -172,6 +198,7 @@
     <None Include="Images\icons8-gears-40.png" />
     <None Include="Images\icons8-increase-40.png" />
     <None Include="Images\icons8-physics-40.png" />
+    <Content Include="Libs\ZedGraph.dll" />
     <Content Include="logokaz.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

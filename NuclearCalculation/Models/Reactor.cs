@@ -17,39 +17,33 @@ namespace NuclearCalculation.Models
         public NeutronSpectra NeutronSpectra { get; set; }
         public DensityArray DensityArray { get; set; }
         IExponent<Matrix<Complex>, Complex> Cram { get; set; }
-        public Reactor()
+        public Reactor(List<Isotope> isotopes, NeutronSpectra spectra, DensityArray densityArray, Endf[] nuclearData)
         {
             Cram = new Cram();
-            Libraries = new Endf[3];
-            //Libraries[0] = new Tendl();
-            Libraries[1] = new EndfB();
-            //Libraries[2] = new Jendl();
-            CurrentEndf = Libraries[1];
-            var isotopes = new List<Isotope>();
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 205));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 206));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 207));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 82 && x.A == 208));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 83 && x.A == 208));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 83 && x.A == 209));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 83 && x.A == 210));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 84 && x.A == 210));
-            isotopes.Add(CurrentEndf?.Isotopes?.FirstOrDefault(x => x.Z == 84 && x.A == 211));
-            NeutronSpectra = new NeutronSpectra(1.0E14, 300);
+            Libraries = nuclearData;
+            CurrentEndf = Libraries[0];
+            NeutronSpectra = spectra;
             BurnUp = new BurnUp(isotopes, NeutronSpectra);
-            var nuclDens = new List<NuclideDensity>(isotopes.Count);
-            foreach (var isotope in isotopes) nuclDens.Add(new NuclideDensity(isotope, 0.0));
-            nuclDens[5].Density = 1.0;
-            DensityArray = new DensityArray(nuclDens);
-
-            Calculate();
+            DensityArray = densityArray;
+            Calculate(1.0E6);
         }
-
-        public void Calculate() 
+        public Reactor(Endf[] nuclearData)
+        {
+            Cram = new Cram();
+            Libraries = nuclearData;
+            CurrentEndf = Libraries[0];
+        }
+        public void SetIsotopesFlux(List<Isotope> isotopes, NeutronSpectra neutronSpectra, DensityArray densityArray) 
+        {
+            DensityArray = densityArray;
+            NeutronSpectra = neutronSpectra;
+            BurnUp = new BurnUp(isotopes, neutronSpectra);
+        }
+        public void Calculate(double sec) 
         {
             var matrix = BurnUp.Matrix.Cast<Complex>();
             var density = DensityArray.Density.Cast<Complex>();
-            DensityArray.Density = Cram.Calculate(matrix * 1E12, density).Cast<double>();    
+            DensityArray.Density = Cram.Calculate(matrix * sec, density).Cast<double>();    
             DensityArray.Normolize();
         }
 

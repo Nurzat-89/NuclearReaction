@@ -19,10 +19,11 @@ namespace KazNuclide
         public MainForm()
         {
             InitializeComponent();
-            var endf = new Tendl();
-            userControls = new Dictionary<Button, UserControl>() 
+            var endfs = new Endf[1] { new Tendl() };
+            userControls = new Dictionary<Button, UserControl>()
             {
-                {btnNuclearData, new MendeleevTableView(){ Isotopes = endf.Isotopes} }
+                {btnNuclearData, new MendeleevTableView(){ Isotopes = endfs[0].Isotopes} },
+                {btnCalculation, new CalculationView(endfs) }
             };
         }
 
