@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.densityTextBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.calculateBtn = new System.Windows.Forms.Button();
             this.burnUpBtn = new System.Windows.Forms.Button();
             this.radiationTimeTextBox = new System.Windows.Forms.TextBox();
@@ -46,9 +49,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.fluxTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.densityTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.terminalTxtBox = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +80,35 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(307, 607);
             this.panel1.TabIndex = 0;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Century Gothic", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label11.Location = new System.Drawing.Point(72, 251);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(155, 17);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "e.g. Pb-209=0.9 Bi210=0.1";
+            // 
+            // densityTextBox
+            // 
+            this.densityTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.densityTextBox.Location = new System.Drawing.Point(9, 272);
+            this.densityTextBox.Multiline = true;
+            this.densityTextBox.Name = "densityTextBox";
+            this.densityTextBox.Size = new System.Drawing.Size(288, 58);
+            this.densityTextBox.TabIndex = 18;
+            this.densityTextBox.Text = "Pb-208=1.0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 250);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(66, 19);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Density: ";
             // 
             // calculateBtn
             // 
@@ -115,9 +145,11 @@
             this.radiationTimeTextBox.Name = "radiationTimeTextBox";
             this.radiationTimeTextBox.Size = new System.Drawing.Size(100, 23);
             this.radiationTimeTextBox.TabIndex = 14;
+            this.radiationTimeTextBox.Text = "60";
             // 
             // timesComBox
             // 
+            this.timesComBox.Enabled = false;
             this.timesComBox.FormattingEnabled = true;
             this.timesComBox.Items.AddRange(new object[] {
             "sec",
@@ -130,7 +162,7 @@
             this.timesComBox.Name = "timesComBox";
             this.timesComBox.Size = new System.Drawing.Size(95, 25);
             this.timesComBox.TabIndex = 13;
-            this.timesComBox.Text = "sec";
+            this.timesComBox.Text = "years";
             // 
             // label9
             // 
@@ -167,7 +199,8 @@
             this.isotopesList.Name = "isotopesList";
             this.isotopesList.Size = new System.Drawing.Size(289, 124);
             this.isotopesList.TabIndex = 9;
-            this.isotopesList.Text = "Pb-206, Pb-207, Pb-208, Pb-209, Bi-208, Bi-209, Bi-210, Po-210, Po-211";
+            this.isotopesList.Text = "Tl-206, Tl-207, Pb-204, Pb-205, Pb-206, Pb-207, Pb-208, Pb-209, Pb-210, Pb-211, B" +
+    "i-209, Bi-210, Bi-211, Po-210, Po-211";
             // 
             // label6
             // 
@@ -249,40 +282,21 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Neutron flux:";
             // 
-            // label10
+            // terminalTxtBox
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 250);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(66, 19);
-            this.label10.TabIndex = 17;
-            this.label10.Text = "Density: ";
-            // 
-            // densityTextBox
-            // 
-            this.densityTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.densityTextBox.Location = new System.Drawing.Point(9, 272);
-            this.densityTextBox.Multiline = true;
-            this.densityTextBox.Name = "densityTextBox";
-            this.densityTextBox.Size = new System.Drawing.Size(288, 58);
-            this.densityTextBox.TabIndex = 18;
-            this.densityTextBox.Text = "Pb-209=1.0";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Century Gothic", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.Location = new System.Drawing.Point(72, 251);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(155, 17);
-            this.label11.TabIndex = 19;
-            this.label11.Text = "e.g. Pb-209=0.9 Bi210=0.1";
+            this.terminalTxtBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.terminalTxtBox.Location = new System.Drawing.Point(307, 0);
+            this.terminalTxtBox.Name = "terminalTxtBox";
+            this.terminalTxtBox.Size = new System.Drawing.Size(704, 607);
+            this.terminalTxtBox.TabIndex = 1;
+            this.terminalTxtBox.Text = "";
             // 
             // CalculationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(179)))));
+            this.Controls.Add(this.terminalTxtBox);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "CalculationView";
@@ -316,5 +330,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox densityTextBox;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.RichTextBox terminalTxtBox;
     }
 }

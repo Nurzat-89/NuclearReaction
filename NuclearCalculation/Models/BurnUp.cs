@@ -33,13 +33,13 @@ namespace NuclearCalculation.Models
             SetBurnMatrix();
         }
 
-        private void setAvgCrossSections(NeutronSpectra neutronSpectra)
+        public void setAvgCrossSections(NeutronSpectra neutronSpectra)
         {
             foreach (var isotope in Isotopes)
                 foreach (var cs in isotope.CrossSections)
                     cs.Value.SetAvgCs(neutronSpectra);
         }
-        private void setDecayProbabilityMatrix()
+        public void setDecayProbabilityMatrix()
         {
             for (int i = 0; i < Isotopes.Count; i++)
             {
@@ -74,7 +74,7 @@ namespace NuclearCalculation.Models
             }
 
         }
-        private void setCaptureProbabilityMatrix()
+        public void setCaptureProbabilityMatrix()
         {
             for (int i = 0; i < Isotopes.Count; i++)
             {
@@ -85,6 +85,7 @@ namespace NuclearCalculation.Models
         }
         public void SetBurnMatrix()
         {
+            Matrix.Zero();
             for (int i = 0; i < Isotopes.Count; i++)
             {
                 for (int j = 0; j < Isotopes.Count; j++)
@@ -92,9 +93,9 @@ namespace NuclearCalculation.Models
                     if (DecayProbability.Arr[i, j] != 0.0)
                         Matrix.Arr[i, j] += Isotopes[j].DecayConst;
                     if (CaptureProbability.Arr[i, j] != 0.0)
-                        Matrix.Arr[i, j] += NeutronSpectra.Flux * Isotopes[j].CrossSections[Constants.REACT.N_G].AvgCs;
+                        Matrix.Arr[i, j] += NeutronSpectra.Flux * Isotopes[j].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn;
                 }
-                try { Matrix.Arr[i, i] += -NeutronSpectra.Flux * Isotopes[i].CrossSections[Constants.REACT.N_G].AvgCs; } catch (Exception ex) { }
+                try { Matrix.Arr[i, i] += -NeutronSpectra.Flux * Isotopes[i].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn; } catch (Exception ex) { }
                 Matrix.Arr[i, i] += -Isotopes[i].DecayConst;
             }
         }

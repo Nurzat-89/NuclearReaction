@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +27,7 @@ namespace NuclearCalculation.Models
             1.3656371871483268171E1,
             1.0991260561901260913E1,
             6.0048316422350373178,
-            3.58882402902700651E2,
+            3.5888240290270065102,
             1.1940690463439669766,
             8.4617379730402214019
         };
@@ -83,6 +85,17 @@ namespace NuclearCalculation.Models
                 for (int i = 1; i <= n; i++) s = s * i;
 
             return s;
+        }
+        public static T DeepClone<T>(T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
         }
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NuclearCalculation.Models
 {
-    public interface IExponent<TMatrix, TType> where TMatrix : Matrix<TType> where TType : struct
+    public interface IExponent
     {
-        TMatrix Calculate(TMatrix a, TMatrix n);
+        Matrix<double> Calculate(Matrix<double> a, Matrix<double> n);
     }
 }

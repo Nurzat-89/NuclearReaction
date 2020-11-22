@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace NuclearCalculation.Models
 {
+    [Serializable]
     public abstract class Matrix<T> where T: struct
     {
         public T[,] Arr { get; set; }
@@ -23,6 +24,9 @@ namespace NuclearCalculation.Models
         {
 
         }
+        public abstract Matrix<T> Clone();
+        public abstract void Zero();
+        public abstract T MaxValueAbs();
         public void SetMatrix(int col, int row)
         {
             Col = col;

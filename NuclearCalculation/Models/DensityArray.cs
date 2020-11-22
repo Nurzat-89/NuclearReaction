@@ -9,12 +9,21 @@ namespace NuclearCalculation.Models
 {
     public class DensityArray
     {
-        public List<NuclideDensity> NuclideDensities { get; set; }
+        private List<NuclideDensity> _nuclideDensities;
+        public List<NuclideDensity> NuclideDensities { get
+            {
+                return _nuclideDensities;
+            }
+            set
+            {
+                _nuclideDensities = value;
+            }
+        }
         public Matrix<double> Density { get; set; }
         public DensityArray(List<NuclideDensity> nuclideDensities)
         {
+            _nuclideDensities = nuclideDensities;
             Density = new MatrixDouble(nuclideDensities.Count, 1);
-            NuclideDensities = nuclideDensities;
             int i = 0;
             foreach (var nuclide in nuclideDensities)
             {

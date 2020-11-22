@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NuclearCalculation.Models
 {
+    [Serializable]
     public class MatrixDouble : Matrix<double>
     {
         public MatrixDouble(int col, int row) : base(col, row)
@@ -21,8 +22,7 @@ namespace NuclearCalculation.Models
             MatrixDouble result = new MatrixDouble(A.Col, A.Row);
             if (A.Col != this.Col || A.Row != this.Row)
             {
-                Console.WriteLine("\nThese matrices is not equal\n");
-                return this;
+                throw new Exception("These matrices is not equal");
             }
             else
             {
@@ -34,10 +34,11 @@ namespace NuclearCalculation.Models
         }
         protected override Matrix<double> Devide(double k)
         {
+            MatrixDouble result = new MatrixDouble(this.Col, this.Row);
             for (int i = 0; i < Col; i++)
                 for (int j = 0; j < Row; j++)
-                    Arr[i, j] = Arr[i, j] / k;
-            return this;
+                   result.Arr[i, j] = Arr[i, j] / k;
+            return result;
         }
         protected override Matrix<double> Multiply(Matrix<double> B)
         {
@@ -58,25 +59,23 @@ namespace NuclearCalculation.Models
             }
             else
             {
-                Console.WriteLine("\nThese matrices cannot be multiplied\n");
-                return this;
+                throw new Exception("These matrices cannot be multiplied");
             }
         }
         protected override Matrix<double> Multiply(double k)
         {
+            MatrixDouble result = new MatrixDouble(Col, Row);
             for (int i = 0; i < Col; i++)
                 for (int j = 0; j < Row; j++)
-                    Arr[i, j] = Arr[i, j] * k;
-            return this;
+                    result.Arr[i, j] = Arr[i, j] * k;
+            return result;
         }
         protected override Matrix<double> Substract(Matrix<double> B)
         {
             MatrixDouble result = new MatrixDouble(B.Col, B.Row);
             if (B.Col != this.Col || B.Row != this.Row)
             {
-
-                Console.WriteLine("\nThese matrices is not equal\n");
-                return this;
+                throw new Exception("These matrices is not equal");
             }
             else
             {
@@ -104,10 +103,10 @@ namespace NuclearCalculation.Models
             result = result.Unity();
 
             if (p == 0) { }
-            else if (p == 1) result = this;
+            else if (p == 1) result = Clone();
             else
             {
-                result = this;
+                result = Clone();
                 for (int i = 1; i < p; i++)
                     result = result * this;
             }
@@ -116,23 +115,19 @@ namespace NuclearCalculation.Models
 
         protected override Matrix<double> Devide(Matrix<double> A)
         {
-            Matrix<double> result = new MatrixDouble(A.Col, A.Row);
-            result = A.Inverse();
-
+            var result = A.Inverse();
             result = this * result;
             return result;
         }
 
         public override Matrix<double> Inverse()
         {
-            Matrix<double> Temp = new MatrixDouble(Col, Row);
             Matrix<double> X = new MatrixDouble(Col, Row);
             Matrix<double> E = new MatrixDouble(Col, Row);
             E = E.Unity();
             double kf;
             int RANG = Row;
-            Temp.Arr = (double[,])Arr.Clone();
-
+            var Temp = Clone();
             for (int p = 0; p < RANG; p++)
             {
                 for (int i = p + 1; i < RANG; i++)
@@ -162,6 +157,44 @@ namespace NuclearCalculation.Models
                 }
             }
             return X;
+        }
+
+        public override void Zero()
+        {
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    Arr[i, j] = 0.0;
+                }
+            }
+        }
+
+        public override double MaxValueAbs()
+        {
+            double max = Math.Abs(Arr[0, 0]);
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    if (Math.Abs(Arr[i, j]) > max)
+                        max = Arr[i, j];
+                }
+            }
+            return max;
+        }
+
+        public override Matrix<double> Clone()
+        {
+            Matrix<double> result = new MatrixDouble(Col, Row);
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    result.Arr[i, j] = Arr[i, j];
+                }
+            }
+            return result;
         }
     }
 }

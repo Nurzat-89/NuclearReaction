@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace NuclearCalculation.Models
 {
+    [Serializable]
     public class MatrixComplex:Matrix<Complex>
     {
         public MatrixComplex(int col, int row) : base(col, row)
@@ -24,10 +25,10 @@ namespace NuclearCalculation.Models
             result = result.Unity();
 
             if (p == 0) { }
-            else if (p == 1) result = this;
+            else if (p == 1) result = Clone();
             else
             {
-                result = this;
+                result = Clone();
                 for (int i = 1; i < p; i++)
                     result = result * this;
             }
@@ -40,8 +41,7 @@ namespace NuclearCalculation.Models
             MatrixComplex result = new MatrixComplex(A.Col, A.Row);
             if (A.Col != this.Col || A.Row != this.Row)
             {
-                Console.WriteLine("\nThese matrices is not equal\n");
-                return this;
+                throw new Exception("These matrices is not equal");
             }
             else
             {
@@ -53,10 +53,11 @@ namespace NuclearCalculation.Models
         }
         protected override Matrix<Complex> Devide(Complex k)
         {
+            MatrixComplex result = new MatrixComplex(Col, Row);
             for (int i = 0; i < Col; i++)
                 for (int j = 0; j < Row; j++)
-                    Arr[i, j] = Arr[i, j] / k;
-            return this;
+                    result.Arr[i, j] = Arr[i, j] / k;
+            return result;
         }
         protected override Matrix<Complex> Multiply(Matrix<Complex> B)
         {
@@ -77,25 +78,23 @@ namespace NuclearCalculation.Models
             }
             else
             {
-                Console.WriteLine("\nThese matrices cannot be multiplied\n");
-                return this;
+                throw new Exception("These matrices cannot be multiplied");
             }
         }
         protected override Matrix<Complex> Multiply(Complex k)
         {
+            MatrixComplex result = new MatrixComplex(Col, Row);
             for (int i = 0; i < Col; i++)
                 for (int j = 0; j < Row; j++)
-                    Arr[i, j] = Arr[i, j] * k;
-            return this;
+                    result.Arr[i, j] = Arr[i, j] * k;
+            return result;
         }
         protected override Matrix<Complex> Substract(Matrix<Complex> B)
         {
             MatrixComplex result = new MatrixComplex(B.Col, B.Row);
             if (B.Col != this.Col || B.Row != this.Row)
             {
-
-                Console.WriteLine("\nThese matrices is not equal\n");
-                return this;
+                throw new Exception("These matrices is not equal");
             }
             else
             {
@@ -118,21 +117,20 @@ namespace NuclearCalculation.Models
 
         protected override Matrix<Complex> Devide(Matrix<Complex> A)
         {
-            Matrix<Complex> result = new MatrixComplex(A.Col, A.Row);
-            result = A.Inverse();
+            var result = A.Inverse();
             result = this * result;
             return result;
         }
 
         public override Matrix<Complex> Inverse()
         {
-            Matrix<Complex> Temp = new MatrixComplex(Col, Row);
             Matrix<Complex> X = new MatrixComplex(Col, Row);
             Matrix<Complex> E = new MatrixComplex(Col, Row);
             E = E.Unity();
             Complex kf = new Complex();
             int RANG = Row;
-            Temp.Arr = (Complex[,])Arr.Clone();
+            var Temp = new MatrixComplex(Col, Row);
+            Temp.Arr = Arr;
 
             for (int p = 0; p < RANG; p++)
             {
@@ -141,11 +139,14 @@ namespace NuclearCalculation.Models
                     if (Temp.Arr[p, p] == 0.0) kf = 0;
                     else kf = -Temp.Arr[i, p] / Temp.Arr[p, p];
 
-                    for (int j = p; j < RANG; j++)
-                        Temp.Arr[i, j] = Temp.Arr[i, j] + kf * Temp.Arr[p, j];
+                    //for (int k = p; k < RANG; k++)
+                    //    Temp.Arr[i, k] = Temp.Arr[i, k] + kf * Temp.Arr[p, k];
 
                     for (int j = 0; j < RANG; j++)
+                    {
                         E.Arr[i, j] = E.Arr[i, j] + kf * E.Arr[p, j];
+                        if (j == p) Temp.Arr[i, j] = Temp.Arr[i, j] + kf * Temp.Arr[p, j];
+                    }
                 }
             }
 
@@ -163,6 +164,35 @@ namespace NuclearCalculation.Models
                 }
             }
             return X;
+        }
+
+        public override void Zero()
+        {
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    Arr[i, j] = new Complex(0.0, 0.0);
+                }
+            }
+        }
+
+        public override Complex MaxValueAbs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Matrix<Complex> Clone()
+        {
+            Matrix<Complex> result = new MatrixComplex(Col, Row);
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    result.Arr[i, j] = Arr[i, j];
+                }
+            }
+            return result;
         }
     }
 }

@@ -6,9 +6,32 @@ using System.Threading.Tasks;
 
 namespace NuclearCalculation.Models
 {
-    public class Pade : IExponent<Matrix<double>, double>
+    public class Pade : IExponent
     {
         public Matrix<double> Calculate(Matrix<double> a, Matrix<double> n)
+        {
+            Matrix<double> _exp = a.Clone();
+
+            int counter = 0;
+            do
+            {
+                _exp = _exp / 2.0;
+                counter++;
+            } while (_exp.MaxValueAbs() >= 0.5);
+
+            _exp = exp(_exp);
+            for (int i = 0; i < counter; i++)
+            {
+                if (double.IsInfinity(_exp.Arr[9, 9])|| double.IsInfinity(_exp.Arr[8, 8])|| double.IsInfinity(_exp.Arr[7, 7]))
+                {
+                    Console.WriteLine("");
+                }
+                _exp = _exp.Pow(2);                
+            }
+            n = _exp * n;
+            return n;
+        }
+        private Matrix<double> exp(Matrix<double> a)
         {
             int p = 6;
             int q = 6;
