@@ -19,46 +19,69 @@ namespace KazNuclide.Views
             Reactor = new Reactor(nuclearData);
         }
 
-        private void burnUpBtn_Click(object sender, EventArgs e)
+        private double getText(string text, string name) 
         {
-            var fluxTxt = fluxTextBox.Text;
-            var tempTxt = temperTextBox.Text;
-            var flux = 0.0;
+            var value = 0.0;
             try
             {
-                flux = double.Parse(fluxTxt, System.Globalization.CultureInfo.InvariantCulture);
+                value = double.Parse(text, System.Globalization.CultureInfo.InvariantCulture);
             }
-            catch (Exception) { MessageBox.Show("Не правильный формат числа потока нейтронов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-
-            var temp = 0.0;
-            try
+            catch (Exception) { MessageBox.Show($"Не правильный формат: {name}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            return value;
+        }
+        private bool SetDensities(string text,  List<NuclideDensity> densities)
+        {
+            bool result = false;
+            if (!string.IsNullOrWhiteSpace(text))
             {
-                temp = double.Parse(tempTxt, System.Globalization.CultureInfo.InvariantCulture);
+                var str = text.Split(' ');
+                if (str != null)
+                {
+                    for (int i = 0; i < str.Length; i++)
+                    {
+                        try
+                        {
+                            var isowgt = str[i].Split('=');
+                            var name = isowgt[0];
+                            var weight = isowgt[1].Replace(',', '.');
+                            var iso = densities.FirstOrDefault(x => x.NuclideName == name);
+                            var wgth = double.Parse(weight, System.Globalization.CultureInfo.InvariantCulture);
+                            iso.Density = wgth;
+                            result = true;
+                        }
+                        catch (Exception) { MessageBox.Show("Не правильна установлена концентрация", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                    }
+                }
             }
-            catch (Exception) { MessageBox.Show("Не правильна установлена температура", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-            var neutronSpectra = new NeutronSpectra(flux, temp);
-
-            var isotopes = new List<Isotope>();
-            var densities = new List<NuclideDensity>();
-                
-            if (!string.IsNullOrWhiteSpace(isotopesList.Text))
+            return result;
+        }
+        private bool SetIsotopesDensity(string text, List<Isotope> isotopes, List<NuclideDensity> densities) 
+        {
+            bool result = false;
+            if (!string.IsNullOrWhiteSpace(text))
             {
                 try
                 {
-                    var str = isotopesList.Text.Replace(" ", "").Split(',');
-
+                    var str = text.Replace(" ", "").Split(',');
                     for (int i = 0; i < str.Length; i++)
                     {
                         var iso = CurrentData.Isotopes.FirstOrDefault(x => x.Name == str[i]);
                         isotopes.Add(iso);
                         densities.Add(new NuclideDensity(iso, 0.0));
                     }
+                    result = true;
                 }
-                catch(Exception) { MessageBox.Show("Не правильно введено название изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                catch (Exception) { MessageBox.Show("Не правильно введены названия изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
-            else if(!string.IsNullOrWhiteSpace(isotopesRange.Text))
+            return result;
+        }
+
+        private bool SetIsotopesRangeDensity(string text, List<Isotope> isotopes, List<NuclideDensity> densities)
+        {
+            bool result = false;
+            if (!string.IsNullOrWhiteSpace(text))
             {
-                var str = isotopesRange.Text.Split('-');
+                var str = text.Split('-');
                 if (str != null)
                 {
                     var ind1 = Constants.ElementNames.ToList().IndexOf(str[0]);
@@ -73,34 +96,35 @@ namespace KazNuclide.Views
                     {
                         densities.Add(new NuclideDensity(isotope, 0.0));
                     }
+                    result = true;
                 }
             }
-            else
+            return result;
+        }
+        private void burnUpBtn_Click(object sender, EventArgs e)
+        {
+            var flux = getText(fluxTextBox.Text, "Поток нейтронов");
+            var temp = getText(temperTextBox.Text, "Температура");            
+            var neutronSpectra = new NeutronSpectra(flux, temp);
+
+            var isotopes = new List<Isotope>();
+            var densities = new List<NuclideDensity>();
+            var isSuccess = SetIsotopesDensity(isotopesList.Text, isotopes, densities);
+            if (!isSuccess) isSuccess = SetIsotopesRangeDensity(isotopesRange.Text, isotopes, densities);
+            if(!isSuccess)
             {
                 MessageBox.Show("Установите какие диапазон изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            if (!string.IsNullOrWhiteSpace(densityTextBox.Text))
+            isSuccess = SetDensities(densityTextBox.Text, densities);
+            if (!isSuccess)
             {
-                var str = densityTextBox.Text.Split(' ');
-                if (str != null)
-                {
-                    for (int i = 0; i < str.Length; i++)
-                    {
-                        try
-                        {
-                            var isowgt = str[i].Split('=');
-                            var name = isowgt[0];
-                            var weight = isowgt[1].Replace(',', '.');
-                            var iso = densities.FirstOrDefault(x => x.NuclideName == name);
-                            var wgth = double.Parse(weight, System.Globalization.CultureInfo.InvariantCulture);
-                            iso.Density = wgth;
-                        }
-                        catch(Exception) { MessageBox.Show("Не правильна установлена концентрация", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-                    }
-                }
-            }
+                MessageBox.Show("Установите начальную концентрацию изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }            
             var densityArray = new DensityArray(densities);
+
             Reactor.SetIsotopesFlux(isotopes, neutronSpectra, densityArray);
 
             /*var iso1 = Reactor.BurnUp.Isotopes.FirstOrDefault(x => x.Name == "Tl-206"); iso1.HalfLife = 2.52E2; iso1.CrossSections[Constants.REACT.N_G].AvgCs = 0.0;
@@ -122,18 +146,6 @@ namespace KazNuclide.Views
             Reactor.BurnUp.setCaptureProbabilityMatrix();
             Reactor.BurnUp.setDecayProbabilityMatrix();
             Reactor.BurnUp.SetBurnMatrix();
-
-
-            //string m = "";
-            //for (int i = 0; i < Reactor.BurnUp.Matrix.Col; i++)
-            //{
-            //    for (int j = 0; j < Reactor.BurnUp.Matrix.Row; j++)
-            //    {
-            //        m += Reactor.BurnUp.Matrix.Arr[i, j] + "\t";
-            //    }
-            //    m += "\n";
-            //}
-            //terminalTxtBox.Text = m;
         }
 
         private void calculateBtn_Click(object sender, EventArgs e)
@@ -142,16 +154,8 @@ namespace KazNuclide.Views
             {
                 var str = timesComBox.SelectedItem.ToString();
                 var timestr = radiationTimeTextBox.Text;
-                int scale = 0;
-                switch (str)
-                {
-                    case "sec": scale = 1; break;
-                    case "mins": scale = 60; break;
-                    case "hours": scale = 3600; break;
-                    case "days": scale = 86400; break;
-                    case "months": scale = 2592000; break;
-                    case "years": scale = 31536000; break;
-                }
+                int scale;
+                try { scale = NuclearCalculation.Models.Globals.TimeScale[str]; } catch (Exception) { return; }
                 var time = Convert.ToInt32(timestr) * scale;
                 Reactor.Calculate(time);
                 string m = "";
@@ -159,7 +163,13 @@ namespace KazNuclide.Views
                 {
                     for (int j = 0; j < Reactor.DensityArray.Density.Row; j++)
                     {
-                        m += Reactor.DensityArray.NuclideDensities[i].NuclideName + " " + Reactor.DensityArray.Density.Arr[i, j] + "\t";
+                        var avg = 0.0;
+                        try
+                        {
+                            avg = Reactor.DensityArray.NuclideDensities[i].Isotope.CrossSections[Constants.REACT.N_G].AvgCs;
+                        }
+                        catch (Exception) { }
+                        m += Reactor.DensityArray.NuclideDensities[i].NuclideName + "\t" + avg + "\t"  + Reactor.DensityArray.Density.Arr[i, j] + "\t";
                     }
                     m += "\n";
                 }

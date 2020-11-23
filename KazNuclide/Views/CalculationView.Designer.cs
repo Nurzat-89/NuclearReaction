@@ -149,7 +149,6 @@
             // 
             // timesComBox
             // 
-            this.timesComBox.Enabled = false;
             this.timesComBox.FormattingEnabled = true;
             this.timesComBox.Items.AddRange(new object[] {
             "sec",

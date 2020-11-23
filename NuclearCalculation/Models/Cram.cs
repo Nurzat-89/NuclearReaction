@@ -24,12 +24,6 @@ namespace NuclearCalculation.Models
                 var temp1 = temp.Inverse();
                 var _n = temp1 * nn * Globals.Alpha[i];
                 N = N + _n;
-                var str = "";
-                for (int j = 0; j < N.Col; j++)
-                {
-                    str += $"{N.Arr[j, 0].Real}  {N.Arr[j, 0].Imaginary}\t";                        
-                }
-                File.AppendAllText(@"F:\nmatrix.txt", str + Environment.NewLine);
             }
             Matrix<double> result = N.Cast<double>();
             result *= 2;

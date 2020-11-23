@@ -26,6 +26,7 @@ namespace NuclearCalculation.Models
                 {
                     Console.WriteLine("");
                 }
+                
                 _exp = _exp.Pow(2);                
             }
             n = _exp * n;

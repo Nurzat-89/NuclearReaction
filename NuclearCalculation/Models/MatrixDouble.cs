@@ -45,16 +45,7 @@ namespace NuclearCalculation.Models
             MatrixDouble result = new MatrixDouble(this.Col, B.Row);
             if (this.Row == B.Col)
             {
-                for (int i = 0; i < this.Col; i++)
-                    for (int j = 0; j < B.Row; j++)
-                    {
-                        double sum = 0.0;
-                        for (int k = 0; k < this.Row; k++)
-                        {
-                            sum += this.Arr[i, k] * B.Arr[k, j];
-                        }
-                        result.Arr[i, j] = sum;
-                    }
+                result.Arr  = Accord.Math.Matrix.Dot(Arr, B.Arr);                
                 return result;
             }
             else
@@ -123,6 +114,12 @@ namespace NuclearCalculation.Models
         public override Matrix<double> Inverse()
         {
             Matrix<double> X = new MatrixDouble(Col, Row);
+            X.Arr = Accord.Math.Matrix.Inverse(Arr);
+            return X;
+        }
+        public Matrix<double> InverseOld()
+        {
+            Matrix<double> X = new MatrixDouble(Col, Row);
             Matrix<double> E = new MatrixDouble(Col, Row);
             E = E.Unity();
             double kf;
@@ -134,12 +131,12 @@ namespace NuclearCalculation.Models
                 {
                     if (Temp.Arr[p, p] == 0.0) kf = 0;
                     else kf = -Temp.Arr[i, p] / Temp.Arr[p, p];
-
-                    for (int j = p; j < RANG; j++)
-                        Temp.Arr[i, j] = Temp.Arr[i, j] + kf * Temp.Arr[p, j];
-
+                    
                     for (int j = 0; j < RANG; j++)
+                    {
                         E.Arr[i, j] = E.Arr[i, j] + kf * E.Arr[p, j];
+                        if (j >= p) Temp.Arr[i, j] = Temp.Arr[i, j] + kf * Temp.Arr[p, j];
+                    }
                 }
             }
 
@@ -195,6 +192,31 @@ namespace NuclearCalculation.Models
                 }
             }
             return result;
+        }
+
+        public override double Sum()
+        {
+            double sum = 0.0;
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    sum += Arr[i, j];                     
+                }
+            }
+            return sum;
+        }
+
+        public override void Normolize()
+        {
+            var sum = Sum();
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    Arr[i, j] = Arr[i, j] / sum;
+                }
+            }
         }
     }
 }

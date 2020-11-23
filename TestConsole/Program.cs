@@ -5,9 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using NuclearCalculation.Models;
 using NuclearData;
 using NuclearData.Models;
+using Accord.Math;
+using System.Numerics;
 
 namespace TestConsole
 {
@@ -15,7 +16,30 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-
+            test1();
+            Random rand = new Random();
+            double[,] matrix1 = new double[2200, 2200];
+            for (int i = 0; i < 2200; i++)
+            {
+                for (int j = 0; j < 2200; j++)
+                {
+                    matrix1[i, j] = rand.NextDouble();
+                }
+            }
+            double[,] matrix2 = new double[2200, 2200];
+            for (int i = 0; i < 2200; i++)
+            {
+                for (int j = 0; j < 2200; j++)
+                {
+                    matrix2[i, j] = rand.NextDouble();
+                }
+            }
+            //var matrix = Matrix.Dot(matrix1, matrix2);
+            var mc = MathNet.Numerics.LinearAlgebra.Matrix<Complex>.Build;
+            Complex[,] matrix3 = new Complex[2, 2];
+            var mat = mc.DenseOfArray(matrix3);
+            var inv = mat.Inverse();
+            //Accord.Math.ComplexMatrix.Multiply()
             //var reactor = new Reactor();
             //File.Move("oldfilename", "newfilename");
 
@@ -46,6 +70,11 @@ namespace TestConsole
             //Endf jeff = new Jendl();
             //tendl.Isotopes = endfB.Isotopes;
             //tendl.SetNuclearData();
+        }
+
+        private static void test1() 
+        {
+
         }
     }
 }

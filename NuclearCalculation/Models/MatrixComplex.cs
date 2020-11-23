@@ -125,6 +125,14 @@ namespace NuclearCalculation.Models
         public override Matrix<Complex> Inverse()
         {
             Matrix<Complex> X = new MatrixComplex(Col, Row);
+            var matBuild = MathNet.Numerics.LinearAlgebra.Matrix<Complex>.Build;
+            var matrix = matBuild.DenseOfArray(Arr).Inverse();
+            X.Arr = matrix.ToArray();
+            return X;
+        }
+        public Matrix<Complex> InverseOld()
+        {
+            Matrix<Complex> X = new MatrixComplex(Col, Row);
             Matrix<Complex> E = new MatrixComplex(Col, Row);
             E = E.Unity();
             Complex kf = new Complex();
@@ -139,13 +147,10 @@ namespace NuclearCalculation.Models
                     if (Temp.Arr[p, p] == 0.0) kf = 0;
                     else kf = -Temp.Arr[i, p] / Temp.Arr[p, p];
 
-                    //for (int k = p; k < RANG; k++)
-                    //    Temp.Arr[i, k] = Temp.Arr[i, k] + kf * Temp.Arr[p, k];
-
                     for (int j = 0; j < RANG; j++)
                     {
                         E.Arr[i, j] = E.Arr[i, j] + kf * E.Arr[p, j];
-                        if (j == p) Temp.Arr[i, j] = Temp.Arr[i, j] + kf * Temp.Arr[p, j];
+                        if (j >= p) Temp.Arr[i, j] = Temp.Arr[i, j] + kf * Temp.Arr[p, j];
                     }
                 }
             }
@@ -165,7 +170,6 @@ namespace NuclearCalculation.Models
             }
             return X;
         }
-
         public override void Zero()
         {
             for (int i = 0; i < Col; i++)
@@ -193,6 +197,31 @@ namespace NuclearCalculation.Models
                 }
             }
             return result;
+        }
+
+        public override Complex Sum()
+        {
+            Complex sum = 0.0;
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    sum += Arr[i, j];
+                }
+            }
+            return sum;
+        }
+
+        public override void Normolize()
+        {
+            var sum = Sum();
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    Arr[i, j] = Arr[i, j] / sum;
+                }
+            }
         }
     }
 }

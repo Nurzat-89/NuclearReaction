@@ -33,6 +33,8 @@ namespace NuclearCalculation.Models
             Row = row;
             Arr = new T[col, row];
         }
+        public abstract T Sum();
+        public abstract void Normolize();
         public Matrix<T2> Cast<T2>() where T2 : struct
         {
             var matrixType = Globals.MatrixTypes[typeof(T2)]; 

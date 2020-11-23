@@ -25,17 +25,15 @@ namespace NuclearCalculation.Models
             DensityArray = densityArray;
             Calculate(1.0E6);
         }
-
-        private void initialize(Endf[] nuclearData)
-        {
-            MatExp = new Cram();
-            Libraries = nuclearData;
-            CurrentEndf = Libraries[0];
-        }
-
         public Reactor(Endf[] nuclearData)
         {
             initialize(nuclearData);
+        }
+        private void initialize(Endf[] nuclearData)
+        {
+            MatExp = new Pade();
+            Libraries = nuclearData;
+            CurrentEndf = Libraries[0];
         }
         public void SetIsotopesFlux(List<Isotope> isotopes, NeutronSpectra neutronSpectra, DensityArray densityArray) 
         {
@@ -46,7 +44,7 @@ namespace NuclearCalculation.Models
         public void Calculate(double sec) 
         {
             var matrix = BurnUp.Matrix;
-            var density = DensityArray.Density;
+            var density = DensityArray.InitialDensity;
             DensityArray.Density = MatExp.Calculate(matrix * sec, density);
             DensityArray.Normolize();
         }

@@ -63,6 +63,16 @@ namespace NuclearCalculation.Models
             new Complex(ThetaReal[6],ThetaImag[6]),
             new Complex(ThetaReal[7],ThetaImag[7]),
         };
+        public static Dictionary<string, int> TimeScale = new Dictionary<string, int>()
+        {
+            {"sec"      ,1          },
+            {"mins"     ,60         },
+            {"hours"    ,3600       },
+            {"days"     ,86400      },
+            {"months"   ,2592000    },
+            {"years"    ,31536000   },
+        };
+
         public static List<Complex> Alpha = new List<Complex>()
         {
             new Complex(AlphaReal[0], AlphaImag[0]),
@@ -78,12 +88,11 @@ namespace NuclearCalculation.Models
             {typeof(double), typeof(MatrixDouble) },
             {typeof(Complex), typeof(MatrixComplex) },
         }; 
-        public static int Factorial(int n)
+        public static double Factorial(int n)
         {
-            int s = 1;
+            double s = 1.0;
             if (n != 0)
-                for (int i = 1; i <= n; i++) s = s * i;
-
+                for (int i = 1; i <= n; i++) s = s * Convert.ToDouble(i);
             return s;
         }
         public static T DeepClone<T>(T obj)
