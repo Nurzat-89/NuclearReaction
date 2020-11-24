@@ -12,6 +12,7 @@ namespace NuclearData.Models
         public int Id { get; set; }
         public Constants.REACT Type => Constants.REACTIONTYPE[Id];
         public string Name => Type.ToString();
+        public string IsotopeName { get; set; }
         public double AvgCs { get; set; }
         public IReaction Reaction { get; set; }
         public CrossSection(int id)

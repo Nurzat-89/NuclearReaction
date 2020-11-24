@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NuclearData.Models;
+using KazNuclide.Models;
 
 namespace KazNuclide.Views
 {
@@ -24,7 +25,21 @@ namespace KazNuclide.Views
 
         private void PlotButtton_Click(object sender, EventArgs e)
         {
-
+            var name = $"{CrossSection.IsotopeName}{NuclearData.Constants.REACTname[CrossSection.Type]}";
+            var table = new CrossSectionDataTable(name);
+            var csValues = new List<BaseCrossSection>();
+            foreach (var data in CrossSection.CrossSectionValues)
+            {
+                if (data.CsBarn == 0.0) continue;
+                csValues.Add(new BaseCrossSection()
+                {
+                    Cs = data.CsBarn,
+                    En = data.EneV
+                });
+            }
+            table.FillTable(csValues);
+            var form = new CrossSectionForm(table);
+            form.ShowDialog();
         }
     }
 }

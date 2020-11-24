@@ -64,6 +64,7 @@ namespace NuclearData.Models
                     Record r = ENDFSplitCONT(line);
                     int ns = Convert.ToInt16(r.c1);
                     var crossSection = new CrossSection(MT);
+                    crossSection.IsotopeName = isotope.Name;
                     i = -1;
                     while ((line = streamReader.ReadLine()) != null)
                     {

@@ -36,6 +36,19 @@
     <ApplicationIcon>logokaz.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.Design.1.2.0.3\lib\net40\MetroFramework.Design.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,6 +72,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\AbundanceDataTable.cs" />
+    <Compile Include="Models\AxisData.cs" />
+    <Compile Include="Models\BaseAbundance.cs" />
+    <Compile Include="Models\BaseCrossSection.cs" />
+    <Compile Include="Models\BaseDataTable.cs" />
+    <Compile Include="Models\CrossSectionDataTable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CalculationView.cs">
@@ -67,11 +86,23 @@
     <Compile Include="Views\CalculationView.Designer.cs">
       <DependentUpon>CalculationView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\CrossSectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CrossSectionForm.Designer.cs">
+      <DependentUpon>CrossSectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\CrossSectionInfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\CrossSectionInfoView.Designer.cs">
       <DependentUpon>CrossSectionInfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataGraphView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\DataGraphView.Designer.cs">
+      <DependentUpon>DataGraphView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\DecayInfoView.cs">
       <SubType>UserControl</SubType>
@@ -96,6 +127,12 @@
     </Compile>
     <Compile Include="Views\IsotopeInfoView.Designer.cs">
       <DependentUpon>IsotopeInfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MendeleevTableView.cs">
       <SubType>UserControl</SubType>
@@ -137,8 +174,14 @@
     <EmbeddedResource Include="Views\CalculationView.resx">
       <DependentUpon>CalculationView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\CrossSectionForm.resx">
+      <DependentUpon>CrossSectionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CrossSectionInfoView.resx">
       <DependentUpon>CrossSectionInfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DataGraphView.resx">
+      <DependentUpon>DataGraphView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DecayInfoView.resx">
       <DependentUpon>DecayInfoView.cs</DependentUpon>
@@ -152,6 +195,9 @@
     <EmbeddedResource Include="Views\IsotopeInfoView.resx">
       <DependentUpon>IsotopeInfoView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MendeleevTableView.resx">
       <DependentUpon>MendeleevTableView.cs</DependentUpon>
     </EmbeddedResource>
@@ -164,6 +210,7 @@
     <EmbeddedResource Include="Views\ReactionInfoView.resx">
       <DependentUpon>ReactionInfoView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -188,6 +235,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Images\icons8-bar-chart-26.png" />
+    <None Include="Images\gears-animation.gif" />
+    <None Include="Images\giphy.gif" />
+    <None Include="Images\HarmlessCarefulArcticfox-size_restricted.gif" />
+    <Content Include="Images\lineorgin.png" />
+    <Content Include="Images\linepoints.png" />
+    <None Include="Images\loader1.gif" />
+    <Content Include="Images\points.png" />
+    <Content Include="MetroFramework.txt" />
     <None Include="Images\logokaznu.png" />
     <None Include="Images\logo1.png" />
     <None Include="Images\icons8-administrative-tools-64.png" />

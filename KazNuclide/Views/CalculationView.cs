@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using KazNuclide.Models;
 using NuclearCalculation.Models;
 using NuclearData;
 using NuclearData.Models;
@@ -158,23 +159,62 @@ namespace KazNuclide.Views
                 try { scale = NuclearCalculation.Models.Globals.TimeScale[str]; } catch (Exception) { return; }
                 var time = Convert.ToInt32(timestr) * scale;
                 Reactor.Calculate(time);
-                string m = "";
-                for (int i = 0; i < Reactor.DensityArray.Density.Col; i++)
+
+                var data = new List<BaseAbundance>();
+                var table = new AbundanceDataTable("Abundances");
+                foreach (var iso in Reactor.DensityArray.NuclideDensities)
                 {
-                    for (int j = 0; j < Reactor.DensityArray.Density.Row; j++)
-                    {
-                        var avg = 0.0;
-                        try
-                        {
-                            avg = Reactor.DensityArray.NuclideDensities[i].Isotope.CrossSections[Constants.REACT.N_G].AvgCs;
-                        }
-                        catch (Exception) { }
-                        m += Reactor.DensityArray.NuclideDensities[i].NuclideName + "\t" + avg + "\t"  + Reactor.DensityArray.Density.Arr[i, j] + "\t";
-                    }
-                    m += "\n";
+                    var cs = 0.0;
+                    try{ cs = iso.Isotope.CrossSections[Constants.REACT.N_G].AvgCs; } catch (Exception) { }
+                    data.Add(new BaseAbundance() 
+                    { 
+                        IsotopeName = iso.NuclideName, 
+                        Density = iso.Density, 
+                        AvgCs = cs, 
+                        Zaid = iso.Isotope.ZAID 
+                    });
                 }
-                terminalTxtBox.Text = m;
+                table.FillTable(data);
+                var dataGraphView = new DataGraphView<BaseAbundance>(table);
+                this.mainViewPanel.Controls.Clear();
+                this.mainViewPanel.Controls.Add(dataGraphView);
+                dataGraphView.Dock = DockStyle.Fill;
+                //string m = "";
+                //for (int i = 0; i < Reactor.DensityArray.Density.Col; i++)
+                //{
+                //    for (int j = 0; j < Reactor.DensityArray.Density.Row; j++)
+                //    {
+                //        var avg = 0.0;
+                //        try
+                //        {
+                //            avg = Reactor.DensityArray.NuclideDensities[i].Isotope.CrossSections[Constants.REACT.N_G].AvgCs;
+                //        }
+                //        catch (Exception) { }
+                //        m += Reactor.DensityArray.NuclideDensities[i].NuclideName + "\t" + avg + "\t"  + Reactor.DensityArray.Density.Arr[i, j] + "\t";
+                //    }
+                //    m += "\n";
+                //}
+
+                //var table = new BaseDataTable<NuclideDensity>(Reactor.DensityArray.NuclideDensities.ToList());
+                //ResultDataTable.DataSource = table.Table;
             }
+            }
+
+        private void txtBoxKt_TextChanged(object sender, EventArgs e)
+        {
+           var kt = getText(txtBoxKt.Text, "kT");
+            var t = NuclearData.Constants.q_electron * kt * 1.0e3 / (NuclearData.Constants.k);
+            temperTextBox.Text = string.Format(t + "", "D2");
+        }
+
+        private void backWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+
+        }
+
+        private void backWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+
         }
     }
 }

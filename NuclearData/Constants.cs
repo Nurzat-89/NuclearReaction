@@ -10,7 +10,7 @@ namespace NuclearData
     {
         public const double STABLE = 1.0E40;
         public const double barn = 1.0E-24;
-        public const double k = 1.38064852E10 - 23;
+        public const double k = 1.38064852E-23;
         public const double ln2 = 0.69314718056;
         public const double e = 2.718281828459;
         public const double q_electron = 1.60217662e-19;
@@ -36,6 +36,16 @@ namespace NuclearData
             {16, REACT.N_2N },
             {103, REACT.N_P },
             {107, REACT.N_A },
+        };
+        public static Dictionary<REACT, string> REACTname = new Dictionary<REACT, string>()
+        {
+            {REACT.N_G, "(n,g)" },
+            {REACT.N_A, "(n,a)" },
+            {REACT.N_2N, "(n,2n)" },
+            {REACT.N_el, "(n,el)" },
+            {REACT.N_inl, "(n,inl)" },
+            {REACT.N_P, "(n,p)" },
+            {REACT.N_tot, "(n,tot)" },
         };
         public static Dictionary<double, RTYPE> DECAYTYPE = new Dictionary<double, RTYPE>() {
             {0, RTYPE.GAMMA },

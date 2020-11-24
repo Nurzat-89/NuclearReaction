@@ -9,9 +9,9 @@ namespace NuclearCalculation.Models
 {
     public class NuclideDensity
     {
+        public string NuclideName => Isotope?.Name;
         public double Density { get; set; }
         public Isotope Isotope { get; set; }
-        public string NuclideName => Isotope?.Name;
         public NuclideDensity(Isotope isotope, double density)
         {
             Isotope = isotope;

@@ -1,4 +1,5 @@
-﻿using KazNuclide.Views;
+﻿using AutoMapper;
+using KazNuclide.Views;
 using NuclearData.Models;
 using System;
 using System.Collections.Generic;
@@ -15,26 +16,30 @@ namespace KazNuclide
     public partial class MainForm : Form
     {
         Dictionary<Button, UserControl> userControls;
-
-        public MainForm()
+        Endf[] NuclearLibs;
+        public MainForm(Endf[] endfs)
         {
             InitializeComponent();
-            var endfs = new Endf[1] { new Tendl() };
+            NuclearLibs = endfs;
             userControls = new Dictionary<Button, UserControl>()
-            {
-                {btnNuclearData, new MendeleevTableView(){ Isotopes = endfs[0].Isotopes} },
-                {btnCalculation, new CalculationView(endfs) }
-            };
+                {
+                    {btnNuclearData, new MendeleevTableView(){ Isotopes = endfs[0].Isotopes} },
+                    {btnCalculation, new CalculationView(endfs) }
+                };
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
             var button = (Button)sender;
             TitleLabel.Text = button.Text;
-            var userControl = userControls[button];
-            MainViewPanel.Controls.Clear();
-            MainViewPanel.Controls.Add(userControl);
-            userControl.Dock = DockStyle.Fill;
+            try
+            {
+                var userControl = userControls[button];
+                MainViewPanel.Controls.Clear();
+                MainViewPanel.Controls.Add(userControl);
+                userControl.Dock = DockStyle.Fill;
+            }
+            catch (Exception) { return; }
         }
     }
 }
