@@ -218,5 +218,16 @@ namespace NuclearCalculation.Models
                 }
             }
         }
+
+        public override void RemoveMinuses()
+        {
+            for (int i = 0; i < Col; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    if (Arr[i, j] < 0.0) Arr[i, j] = 0.0;
+                }
+            }
+        }
     }
 }

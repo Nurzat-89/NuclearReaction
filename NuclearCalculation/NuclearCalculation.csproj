@@ -65,6 +65,7 @@
     <Compile Include="Models\Matrix.cs" />
     <Compile Include="Models\MatrixComplex.cs" />
     <Compile Include="Models\MatrixDouble.cs" />
+    <Compile Include="Models\Mmpa.cs" />
     <Compile Include="Models\NuclideDensity.cs" />
     <Compile Include="Models\Pade.cs" />
     <Compile Include="Models\Reactor.cs" />

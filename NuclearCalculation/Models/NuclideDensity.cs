@@ -10,6 +10,7 @@ namespace NuclearCalculation.Models
     public class NuclideDensity
     {
         public string NuclideName => Isotope?.Name;
+        public double AtomicWeight => Isotope.AtomicMass;
         public double Density { get; set; }
         public Isotope Isotope { get; set; }
         public NuclideDensity(Isotope isotope, double density)

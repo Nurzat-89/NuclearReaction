@@ -10,6 +10,7 @@ namespace NuclearData.Models
     public abstract class Endf
     {
         public List<Isotope> Isotopes { get; set; }
+        public IMacsEndfBase EndfMacs { get; set; }
         protected string LibFolder { get; set; }
         protected string Extension { get; set; }
         public List<NuclearDataReader> NuclearData { get; set; }
@@ -17,6 +18,7 @@ namespace NuclearData.Models
         {
             NuclearData = new List<NuclearDataReader>();
             Isotopes = new List<Isotope>();
+            EndfMacs = new EafMacs();
             NuclearData.Add(new DecayDataReader());
             NuclearData.Add(new NeutronDataReader());
             NuclearData.Add(new N2NdataReader());

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +56,8 @@ namespace KazNuclide.Views
             if (data.Count == 0) return;
             pane.CurveList.Clear();
             pane.XAxis.Title = data[0].Xname;
+            pane.XAxis.MinAuto = true;
+            pane.YAxis.MinAuto = true;
             pane.YAxis.Title = data[0].Yname;
             if(xlog) pane.XAxis.Type = AxisType.Log; else pane.XAxis.Type = AxisType.Linear;
             if (ylog) pane.YAxis.Type = AxisType.Log; else pane.YAxis.Type = AxisType.Linear;
@@ -77,6 +80,9 @@ namespace KazNuclide.Views
             pane.CurveList.Clear();
             pane.XAxis.Title = data[0].Xname;
             pane.YAxis.Title = data[0].Yname;
+            pane.XAxis.MinAuto = true;
+            pane.YAxis.MinAuto = true;
+
             if (xlog) pane.XAxis.Type = AxisType.Log; else pane.XAxis.Type = AxisType.Linear;
             if (ylog) pane.YAxis.Type = AxisType.Log; else pane.YAxis.Type = AxisType.Linear;
 
@@ -91,7 +97,7 @@ namespace KazNuclide.Views
             curve.Line.IsVisible = false;
             curve.Symbol.Fill.Color = Color.Blue;
             curve.Symbol.Fill.Type = FillType.Solid;
-            curve.Symbol.Size = 1.0f;
+            curve.Symbol.Size = 3.0f;
 
             ZedGraph.AxisChange();
             ZedGraph.Invalidate();
@@ -102,6 +108,9 @@ namespace KazNuclide.Views
             pane.CurveList.Clear();
             pane.XAxis.Title = data[0].Xname;
             pane.YAxis.Title = data[0].Yname;
+            pane.XAxis.MinAuto = true;
+            pane.YAxis.MinAuto = true;
+
             if (xlog) pane.XAxis.Type = AxisType.Log; else pane.XAxis.Type = AxisType.Linear;
             if (ylog) pane.YAxis.Type = AxisType.Log; else pane.YAxis.Type = AxisType.Linear;
 
@@ -115,7 +124,7 @@ namespace KazNuclide.Views
             var curve = pane.AddCurve(BaseDataTable.Name, list, Color.Blue, SymbolType.Square);
             curve.Line.IsVisible = true;
             curve.Symbol.Fill.Type = FillType.Solid;
-            curve.Symbol.Size = 1.0f;
+            curve.Symbol.Size = 3.0f;
             curve.Symbol.Fill.Color = Color.Blue;
 
             ZedGraph.AxisChange();
@@ -127,6 +136,9 @@ namespace KazNuclide.Views
             pane.CurveList.Clear();
             pane.XAxis.Title = data[0].Xname;
             pane.YAxis.Title = data[0].Yname;
+            pane.XAxis.MinAuto = true;
+            pane.YAxis.MinAuto = true;
+
             if (xlog) pane.XAxis.Type = AxisType.Log; else pane.XAxis.Type = AxisType.Linear;
             if (ylog) pane.YAxis.Type = AxisType.Log; else pane.YAxis.Type = AxisType.Linear;
 
@@ -180,6 +192,28 @@ namespace KazNuclide.Views
         private void ylog_CheckedChanged(object sender, EventArgs e)
         {
             drawChart(BaseDataTable.Data, chartType, xlog.Checked, ylog.Checked);
+        }
+
+        private void importData_Click(object sender, EventArgs e)
+        {
+            string str = "";
+            for (int i = 0; i < DataTable.Rows.Count; i++)
+            {
+                for (int j = 0; j < DataTable.Columns.Count; j++)
+                {
+                    str += DataTable.Rows[i].Cells[j].Value + "\t";                        
+                }
+                str += "\n";                    
+            }
+            var fileDialog = new SaveFileDialog();
+            if(fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (Stream s = File.Open(fileDialog.FileName, FileMode.Create))
+                using (StreamWriter sw = new StreamWriter(s))
+                {
+                    sw.Write(str);
+                }
+            }
         }
     }
 }

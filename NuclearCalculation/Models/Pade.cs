@@ -8,6 +8,8 @@ namespace NuclearCalculation.Models
 {
     public class Pade : IExponent
     {
+        public event Globals.ExpStatusChangedDelegate ExpStatusChangedEvent;
+
         public Matrix<double> Calculate(Matrix<double> a, Matrix<double> n)
         {
             Matrix<double> _exp = a.Clone();
@@ -20,14 +22,15 @@ namespace NuclearCalculation.Models
             } while (_exp.MaxValueAbs() >= 0.5);
 
             _exp = exp(_exp);
+            var dx = 100.0 / counter;
             for (int i = 0; i < counter; i++)
             {
                 if (double.IsInfinity(_exp.Arr[9, 9])|| double.IsInfinity(_exp.Arr[8, 8])|| double.IsInfinity(_exp.Arr[7, 7]))
                 {
                     Console.WriteLine("");
-                }
-                
-                _exp = _exp.Pow(2);                
+                }                
+                _exp = _exp.Pow(2);
+                ExpStatusChangedEvent?.Invoke((int)(dx * i));
             }
             n = _exp * n;
             return n;

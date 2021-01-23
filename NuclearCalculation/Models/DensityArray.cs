@@ -28,7 +28,7 @@ namespace NuclearCalculation.Models
             {
                 _density = value;
                 int i = 0;
-                foreach (var nuclDens in NuclideDensities)
+                foreach (var nuclDens in _nuclideDensities)
                 {
                     nuclDens.Density = _density.Arr[i, 0];
                     i++;
@@ -52,6 +52,12 @@ namespace NuclearCalculation.Models
         public void Normolize() 
         {
             _density.Normolize();
+            int i = 0;
+            foreach (var nuclDens in _nuclideDensities)
+            {
+                nuclDens.Density = _density.Arr[i, 0];
+                i++;
+            }
         }
     }
 }

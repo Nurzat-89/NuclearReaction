@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KazNuclide", "KazNuclide\Ka
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearCalculation", "NuclearCalculation\NuclearCalculation.csproj", "{A95599E8-34FB-4830-9ED5-C768BFED3E79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMPA_test", "MMPA_test\MMPA_test.csproj", "{D9AD94AD-4C80-4398-860D-95569499AAFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A95599E8-34FB-4830-9ED5-C768BFED3E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A95599E8-34FB-4830-9ED5-C768BFED3E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A95599E8-34FB-4830-9ED5-C768BFED3E79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9AD94AD-4C80-4398-860D-95569499AAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9AD94AD-4C80-4398-860D-95569499AAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9AD94AD-4C80-4398-860D-95569499AAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9AD94AD-4C80-4398-860D-95569499AAFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

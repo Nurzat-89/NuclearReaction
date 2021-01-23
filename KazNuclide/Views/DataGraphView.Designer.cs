@@ -29,77 +29,70 @@ namespace KazNuclide.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-            this.TableTab = new MetroFramework.Controls.MetroTabPage();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DataTable = new System.Windows.Forms.DataGridView();
-            this.GraphTab = new MetroFramework.Controls.MetroTabPage();
             this.ZedGraph = new ZedGraph.ZedGraphControl();
-            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ylog = new System.Windows.Forms.CheckBox();
+            this.xlog = new System.Windows.Forms.CheckBox();
             this.btnBar = new System.Windows.Forms.Button();
             this.btnPoints = new System.Windows.Forms.Button();
             this.btnLinePoints = new System.Windows.Forms.Button();
             this.btnLine = new System.Windows.Forms.Button();
             this.Header = new System.Windows.Forms.Label();
-            this.xlog = new System.Windows.Forms.CheckBox();
-            this.ylog = new System.Windows.Forms.CheckBox();
-            this.metroTabControl1.SuspendLayout();
-            this.TableTab.SuspendLayout();
+            this.metroTabControl2 = new MetroFramework.Controls.MetroTabControl();
+            this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
+            this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.importData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataTable)).BeginInit();
-            this.GraphTab.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.metroTabControl2.SuspendLayout();
+            this.metroTabPage1.SuspendLayout();
+            this.metroTabPage2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // metroTabControl1
-            // 
-            this.metroTabControl1.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.metroTabControl1.Controls.Add(this.TableTab);
-            this.metroTabControl1.Controls.Add(this.GraphTab);
-            this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroTabControl1.Location = new System.Drawing.Point(0, 37);
-            this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 1;
-            this.metroTabControl1.Size = new System.Drawing.Size(534, 494);
-            this.metroTabControl1.TabIndex = 0;
-            // 
-            // TableTab
-            // 
-            this.TableTab.Controls.Add(this.DataTable);
-            this.TableTab.HorizontalScrollbarBarColor = true;
-            this.TableTab.HorizontalScrollbarSize = 0;
-            this.TableTab.Location = new System.Drawing.Point(4, 4);
-            this.TableTab.Name = "TableTab";
-            this.TableTab.Size = new System.Drawing.Size(526, 451);
-            this.TableTab.TabIndex = 1;
-            this.TableTab.Text = "Table";
-            this.TableTab.VerticalScrollbarBarColor = true;
-            this.TableTab.VerticalScrollbarSize = 0;
             // 
             // DataTable
             // 
-            this.DataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataTable.AllowUserToResizeColumns = false;
+            this.DataTable.AllowUserToResizeRows = false;
+            this.DataTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DataTable.BackgroundColor = System.Drawing.Color.White;
+            this.DataTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DataTable.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
+            this.DataTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(201)))), ((int)(((byte)(231)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.DataTable.ColumnHeadersHeight = 40;
+            this.DataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DataTable.DefaultCellStyle = dataGridViewCellStyle2;
             this.DataTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DataTable.EnableHeadersVisualStyles = false;
             this.DataTable.Location = new System.Drawing.Point(0, 0);
+            this.DataTable.MultiSelect = false;
             this.DataTable.Name = "DataTable";
+            this.DataTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            this.DataTable.RowHeadersVisible = false;
             this.DataTable.RowHeadersWidth = 51;
             this.DataTable.RowTemplate.Height = 24;
-            this.DataTable.Size = new System.Drawing.Size(526, 451);
+            this.DataTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DataTable.Size = new System.Drawing.Size(472, 458);
             this.DataTable.TabIndex = 2;
-            // 
-            // GraphTab
-            // 
-            this.GraphTab.Controls.Add(this.ZedGraph);
-            this.GraphTab.Controls.Add(this.zedGraphControl1);
-            this.GraphTab.Controls.Add(this.panel1);
-            this.GraphTab.HorizontalScrollbarBarColor = true;
-            this.GraphTab.HorizontalScrollbarSize = 0;
-            this.GraphTab.Location = new System.Drawing.Point(4, 4);
-            this.GraphTab.Name = "GraphTab";
-            this.GraphTab.Size = new System.Drawing.Size(526, 451);
-            this.GraphTab.TabIndex = 2;
-            this.GraphTab.Text = "Graphics";
-            this.GraphTab.VerticalScrollbarBarColor = true;
-            this.GraphTab.VerticalScrollbarSize = 0;
             // 
             // ZedGraph
             // 
@@ -108,18 +101,8 @@ namespace KazNuclide.Views
             this.ZedGraph.Location = new System.Drawing.Point(0, 0);
             this.ZedGraph.Name = "ZedGraph";
             this.ZedGraph.PointValueFormat = "G";
-            this.ZedGraph.Size = new System.Drawing.Size(526, 426);
+            this.ZedGraph.Size = new System.Drawing.Size(472, 469);
             this.ZedGraph.TabIndex = 4;
-            // 
-            // zedGraphControl1
-            // 
-            this.zedGraphControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControl1.IsShowPointValues = false;
-            this.zedGraphControl1.Location = new System.Drawing.Point(0, 0);
-            this.zedGraphControl1.Name = "zedGraphControl1";
-            this.zedGraphControl1.PointValueFormat = "G";
-            this.zedGraphControl1.Size = new System.Drawing.Size(526, 426);
-            this.zedGraphControl1.TabIndex = 2;
             // 
             // panel1
             // 
@@ -131,10 +114,36 @@ namespace KazNuclide.Views
             this.panel1.Controls.Add(this.btnLinePoints);
             this.panel1.Controls.Add(this.btnLine);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 426);
+            this.panel1.Location = new System.Drawing.Point(0, 469);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(526, 25);
+            this.panel1.Size = new System.Drawing.Size(472, 25);
             this.panel1.TabIndex = 3;
+            // 
+            // ylog
+            // 
+            this.ylog.AutoSize = true;
+            this.ylog.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ylog.Location = new System.Drawing.Point(165, 0);
+            this.ylog.Name = "ylog";
+            this.ylog.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.ylog.Size = new System.Drawing.Size(70, 25);
+            this.ylog.TabIndex = 5;
+            this.ylog.Text = "ylog";
+            this.ylog.UseVisualStyleBackColor = true;
+            this.ylog.CheckedChanged += new System.EventHandler(this.ylog_CheckedChanged);
+            // 
+            // xlog
+            // 
+            this.xlog.AutoSize = true;
+            this.xlog.Dock = System.Windows.Forms.DockStyle.Left;
+            this.xlog.Location = new System.Drawing.Point(96, 0);
+            this.xlog.Name = "xlog";
+            this.xlog.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.xlog.Size = new System.Drawing.Size(69, 25);
+            this.xlog.TabIndex = 4;
+            this.xlog.Text = "xlog";
+            this.xlog.UseVisualStyleBackColor = true;
+            this.xlog.CheckedChanged += new System.EventHandler(this.xlog_CheckedChanged);
             // 
             // btnBar
             // 
@@ -194,64 +203,94 @@ namespace KazNuclide.Views
             this.Header.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Header.Location = new System.Drawing.Point(0, 0);
             this.Header.Name = "Header";
-            this.Header.Size = new System.Drawing.Size(534, 37);
+            this.Header.Size = new System.Drawing.Size(480, 37);
             this.Header.TabIndex = 1;
             this.Header.Text = "Header";
             this.Header.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // xlog
+            // metroTabControl2
             // 
-            this.xlog.AutoSize = true;
-            this.xlog.Dock = System.Windows.Forms.DockStyle.Left;
-            this.xlog.Location = new System.Drawing.Point(96, 0);
-            this.xlog.Name = "xlog";
-            this.xlog.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.xlog.Size = new System.Drawing.Size(69, 25);
-            this.xlog.TabIndex = 4;
-            this.xlog.Text = "xlog";
-            this.xlog.UseVisualStyleBackColor = true;
-            this.xlog.CheckedChanged += new System.EventHandler(this.xlog_CheckedChanged);
+            this.metroTabControl2.Controls.Add(this.metroTabPage1);
+            this.metroTabControl2.Controls.Add(this.metroTabPage2);
+            this.metroTabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroTabControl2.Location = new System.Drawing.Point(0, 37);
+            this.metroTabControl2.Name = "metroTabControl2";
+            this.metroTabControl2.SelectedIndex = 0;
+            this.metroTabControl2.Size = new System.Drawing.Size(480, 537);
+            this.metroTabControl2.TabIndex = 2;
             // 
-            // ylog
+            // metroTabPage1
             // 
-            this.ylog.AutoSize = true;
-            this.ylog.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ylog.Location = new System.Drawing.Point(165, 0);
-            this.ylog.Name = "ylog";
-            this.ylog.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.ylog.Size = new System.Drawing.Size(70, 25);
-            this.ylog.TabIndex = 5;
-            this.ylog.Text = "ylog";
-            this.ylog.UseVisualStyleBackColor = true;
-            this.ylog.CheckedChanged += new System.EventHandler(this.ylog_CheckedChanged);
+            this.metroTabPage1.Controls.Add(this.DataTable);
+            this.metroTabPage1.Controls.Add(this.panel2);
+            this.metroTabPage1.HorizontalScrollbarSize = 0;
+            this.metroTabPage1.Location = new System.Drawing.Point(4, 39);
+            this.metroTabPage1.Name = "metroTabPage1";
+            this.metroTabPage1.Size = new System.Drawing.Size(472, 494);
+            this.metroTabPage1.TabIndex = 0;
+            this.metroTabPage1.Text = "Table";
+            this.metroTabPage1.VerticalScrollbarSize = 0;
+            // 
+            // metroTabPage2
+            // 
+            this.metroTabPage2.Controls.Add(this.ZedGraph);
+            this.metroTabPage2.Controls.Add(this.panel1);
+            this.metroTabPage2.HorizontalScrollbarSize = 0;
+            this.metroTabPage2.Location = new System.Drawing.Point(4, 39);
+            this.metroTabPage2.Name = "metroTabPage2";
+            this.metroTabPage2.Size = new System.Drawing.Size(472, 494);
+            this.metroTabPage2.TabIndex = 1;
+            this.metroTabPage2.Text = "Graph";
+            this.metroTabPage2.VerticalScrollbarSize = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.importData);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 458);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(472, 36);
+            this.panel2.TabIndex = 3;
+            // 
+            // importData
+            // 
+            this.importData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            this.importData.Dock = System.Windows.Forms.DockStyle.Right;
+            this.importData.FlatAppearance.BorderSize = 0;
+            this.importData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.importData.ForeColor = System.Drawing.Color.White;
+            this.importData.Location = new System.Drawing.Point(382, 0);
+            this.importData.Name = "importData";
+            this.importData.Size = new System.Drawing.Size(90, 36);
+            this.importData.TabIndex = 0;
+            this.importData.Text = "Import";
+            this.importData.UseVisualStyleBackColor = false;
+            this.importData.Click += new System.EventHandler(this.importData_Click);
             // 
             // DataGraphView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.metroTabControl1);
+            this.Controls.Add(this.metroTabControl2);
             this.Controls.Add(this.Header);
             this.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "DataGraphView";
-            this.Size = new System.Drawing.Size(534, 531);
-            this.metroTabControl1.ResumeLayout(false);
-            this.TableTab.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(480, 574);
             ((System.ComponentModel.ISupportInitialize)(this.DataTable)).EndInit();
-            this.GraphTab.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.metroTabControl2.ResumeLayout(false);
+            this.metroTabPage1.ResumeLayout(false);
+            this.metroTabPage2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private MetroFramework.Controls.MetroTabControl metroTabControl1;
-        private MetroFramework.Controls.MetroTabPage TableTab;
         private System.Windows.Forms.DataGridView DataTable;
-        private MetroFramework.Controls.MetroTabPage GraphTab;
-        private ZedGraph.ZedGraphControl zedGraphControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnLine;
         private System.Windows.Forms.Label Header;
@@ -261,5 +300,10 @@ namespace KazNuclide.Views
         private ZedGraph.ZedGraphControl ZedGraph;
         private System.Windows.Forms.CheckBox ylog;
         private System.Windows.Forms.CheckBox xlog;
+        private MetroFramework.Controls.MetroTabControl metroTabControl2;
+        private MetroFramework.Controls.MetroTabPage metroTabPage1;
+        private MetroFramework.Controls.MetroTabPage metroTabPage2;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button importData;
     }
 }

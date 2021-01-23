@@ -35,6 +35,7 @@ namespace NuclearCalculation.Models
         }
         public abstract T Sum();
         public abstract void Normolize();
+        public abstract void RemoveMinuses();
         public Matrix<T2> Cast<T2>() where T2 : struct
         {
             var matrixType = Globals.MatrixTypes[typeof(T2)]; 

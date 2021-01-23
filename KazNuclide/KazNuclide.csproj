@@ -146,6 +146,13 @@
     <Compile Include="Views\MenuButtonView.Designer.cs">
       <DependentUpon>MenuButtonView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\MiniLoadFormHelper.cs" />
+    <Compile Include="Views\MiniLoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MiniLoadingForm.Designer.cs">
+      <DependentUpon>MiniLoadingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\NuclearDataView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -203,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MenuButtonView.resx">
       <DependentUpon>MenuButtonView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MiniLoadingForm.resx">
+      <DependentUpon>MiniLoadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\NuclearDataView.resx">
       <DependentUpon>NuclearDataView.cs</DependentUpon>

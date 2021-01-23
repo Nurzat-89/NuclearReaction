@@ -41,5 +41,12 @@ namespace KazNuclide
             }
             catch (Exception) { return; }
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var dr = MessageBox.Show("Вы действительно хотите закрыть?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (dr == DialogResult.Yes) { Application.Exit(); }
+            else e.Cancel = true;
+        }
     }
 }

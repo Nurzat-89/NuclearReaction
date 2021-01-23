@@ -24,7 +24,7 @@ namespace NuclearData.Models
             {
                 fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             }
-            catch (FileNotFoundException ex)
+            catch (FileNotFoundException)
             {
                 return isotope;
             }

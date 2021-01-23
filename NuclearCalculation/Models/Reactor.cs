@@ -16,7 +16,7 @@ namespace NuclearCalculation.Models
         public Endf CurrentEndf { get; set; }
         public NeutronSpectra NeutronSpectra { get; set; }
         public DensityArray DensityArray { get; set; }
-        IExponent MatExp { get; set; }
+        public IExponent MatExp { get; set; }
         public Reactor(List<Isotope> isotopes, NeutronSpectra spectra, DensityArray densityArray, Endf[] nuclearData)
         {
             initialize(nuclearData);
@@ -31,15 +31,31 @@ namespace NuclearCalculation.Models
         }
         private void initialize(Endf[] nuclearData)
         {
-            MatExp = new Pade();
+            MatExp = new Mmpa();
             Libraries = nuclearData;
             CurrentEndf = Libraries[0];
         }
-        public void SetIsotopesFlux(List<Isotope> isotopes, NeutronSpectra neutronSpectra, DensityArray densityArray) 
+        public void SetIsotopesFlux(List<Isotope> isotopes, NeutronSpectra neutronSpectra)
         {
-            DensityArray = densityArray;
             NeutronSpectra = neutronSpectra;
             BurnUp = new BurnUp(isotopes, neutronSpectra);
+        }
+        public void SetIsotopesFlux(List<Isotope> isotopes, NeutronSpectra neutronSpectra, Constants.DATALIBS dataLib, double kt) 
+        {
+            NeutronSpectra = neutronSpectra;
+            var macs = CurrentEndf.EndfMacs.GetMacsList(dataLib, kt);
+            BurnUp = new BurnUp(isotopes, neutronSpectra, macs);
+        }
+        public void SetDensityArray(List<NuclideDensity> initDensities) 
+        {
+            var densities = new List<NuclideDensity>();
+            foreach (var iso in BurnUp.Isotopes)
+            {
+                var dens = initDensities.FirstOrDefault(x => x.NuclideName == iso.Name);
+                var weight = dens == null ? 0.0 : dens.Density;
+                densities.Add(new NuclideDensity(iso, weight));              
+            }
+            DensityArray = new DensityArray(densities);
         }
         public void Calculate(double sec) 
         {

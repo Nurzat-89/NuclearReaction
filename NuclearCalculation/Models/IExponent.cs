@@ -8,6 +8,7 @@ namespace NuclearCalculation.Models
 {
     public interface IExponent
     {
+        event Globals.ExpStatusChangedDelegate ExpStatusChangedEvent;
         Matrix<double> Calculate(Matrix<double> a, Matrix<double> n);
     }
 }

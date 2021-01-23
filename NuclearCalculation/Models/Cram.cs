@@ -5,11 +5,15 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using static NuclearCalculation.Models.Globals;
 
 namespace NuclearCalculation.Models
 {
     public class Cram : IExponent
     {
+
+        public event ExpStatusChangedDelegate ExpStatusChangedEvent;
+
         public Matrix<double> Calculate(Matrix<double> a, Matrix<double> n)
         {
             Matrix<Complex> U = new MatrixComplex(a.Col, a.Row);
@@ -18,16 +22,33 @@ namespace NuclearCalculation.Models
             var aa = a.Cast<Complex>();
             var nn = n.Cast<Complex>();
             U = U.Unity();
+            var dx = 100.0 / 7.0;
             for (int i = 1; i <= 7; i++)
             {
                 var temp = aa - (U * Globals.Theta[i]);
                 var temp1 = temp.Inverse();
                 var _n = temp1 * nn * Globals.Alpha[i];
+                var str = "";
                 N = N + _n;
+                ExpStatusChangedEvent?.Invoke((int)(i * dx));
+                //if (i == 1)
+                //{
+                //    for (int k = 0; k < temp1.Col; k++)
+                //    {
+                //        for (int j = 0; j < temp1.Row; j++)
+                //        {
+                //            str += temp1.Arr[k, j].Real + "  " + temp1.Arr[k, j].Imaginary + "\t";
+                //        }
+                //        str += "\n";
+                //    }
+                //    str += "\n";
+                //    File.AppendAllText("F://testmatrix.txt", str);
+                //}
             }
             Matrix<double> result = N.Cast<double>();
             result *= 2;
             result += n * Globals.Alpha[0].Real;
+            result.RemoveMinuses();
             return result;
         }
         private Matrix<double> testCram(Matrix<double> a, Matrix<double> n) 

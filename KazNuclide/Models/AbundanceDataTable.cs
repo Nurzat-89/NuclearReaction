@@ -15,8 +15,11 @@ namespace KazNuclide.Models
         public override void InitTable()
         {
             Table.Columns.Add("Name", typeof(string));
+            Table.Columns.Add("Atomic weight", typeof(double));
             Table.Columns.Add("Abundance", typeof(double));
             Table.Columns.Add("Avg cs, barn", typeof(double));
+            Table.Columns.Add("sig x ab", typeof(double));
+            Table.Columns.Add("Halfe life, sec", typeof(double));
         }
         public override void FillTable(List<BaseAbundance> data)
         {
@@ -24,7 +27,7 @@ namespace KazNuclide.Models
             Table.Rows.Clear();
             foreach (var d in data)
             {
-                Table.Rows.Add(d.IsotopeName, d.Density, d.AvgCs);
+                Table.Rows.Add(d.IsotopeName, d.AtomicWeight, d.Density, d.AvgCs, d.sig_weight, d.HalfLife);
             }
         }
     }

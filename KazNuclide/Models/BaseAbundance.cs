@@ -12,9 +12,14 @@ namespace KazNuclide.Models
         public int Zaid { get; set; }
         public double Density { get; set; }
         public double AvgCs { get; set; }
+        public double sig_weight => AvgCs * Density;
+        public double sig_1 => 1 / AvgCs;
+        public double HalfLife { get; set; }
+        public int OddEven { get; set; }
+        public double AtomicWeight { get; set; }
         public override string Xname => "ZA";
         public override string Yname => "Abundances, %";
-        public override double X => Zaid;
+        public override double X => AtomicWeight;
         public override double Y => Density;
     }
 }
