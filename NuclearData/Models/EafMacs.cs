@@ -21,7 +21,7 @@ namespace NuclearData.Models
             {
                 fileStream = new FileStream(fn, FileMode.Open, FileAccess.Read);
             }
-            catch (FileNotFoundException ex)
+            catch (FileNotFoundException)
             {
                 return;
             }

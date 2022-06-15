@@ -23,7 +23,7 @@ namespace NuclearCalculation.Models
             NeutronSpectra = spectra;
             BurnUp = new BurnUp(isotopes, NeutronSpectra);
             DensityArray = densityArray;
-            Calculate(1.0E6);
+            //Calculate(1.0E6);
         }
         public Reactor(Endf[] nuclearData)
         {
@@ -31,7 +31,7 @@ namespace NuclearCalculation.Models
         }
         private void initialize(Endf[] nuclearData)
         {
-            MatExp = new Mmpa();
+            MatExp = new Cram();
             Libraries = nuclearData;
             CurrentEndf = Libraries[0];
         }
@@ -63,6 +63,10 @@ namespace NuclearCalculation.Models
             var density = DensityArray.InitialDensity;
             DensityArray.Density = MatExp.Calculate(matrix * sec, density);
             DensityArray.Normolize();
+        }
+        public void Calculate(double kev, double dens, double expos)
+        {
+
         }
 
     }

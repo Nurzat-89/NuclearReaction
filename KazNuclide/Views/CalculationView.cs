@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using KazNuclide.Models;
@@ -123,11 +124,204 @@ namespace KazNuclide.Views
             densityCalculation();
             waitForm.Close();
         }
+
+        private void calculateFluxMeshBtn_Click(object sender, EventArgs e)
+        {
+            var lines = new string[1000, 20];
+            for (int i = 0; i < 1000; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    lines[i, j] = " ";
+                }
+            }
+            double flux = 1.0E13;
+            waitForm.Show(this);
+            for (int i = 0; i < 5; i++)
+            {
+                buildBurnup(flux);
+                var data = densityFluxMeshCalculation();
+                flux = flux * 10;
+                int k = 0;
+                foreach (var d in data)
+                {
+                    lines[k, i * 2] = d.A.ToString();
+                    lines[k, i * 2 + 1] = d.sig_weight.ToString();
+                    k++;
+                }
+            }
+            File.AppendAllText(@"F:\meshtime.dat", Environment.NewLine + Environment.NewLine + Environment.NewLine);
+
+            for (int i = 0; i < 1000; i++)
+            {
+                var str = "";
+                for (int j = 0; j < 20; j++)
+                {
+                    str += lines[i, j] + "\t";
+                }
+                File.AppendAllText(@"F:\meshtime.dat", str + Environment.NewLine);
+            }
+            waitForm.Close();
+        }
+
+        private void calculateMeshBtn_Click(object sender, EventArgs e)
+        {
+            var lines = new string[1000, 20];
+            for (int i = 0; i < 1000; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    lines[i, j] = " ";
+                }
+            }
+                
+            var time = 5000;
+            waitForm.Show(this);
+            for (int i = 0; i < 5; i++)
+            {
+                var data = densityMeshCalculation(time);
+                time = time * (i + 1);
+                int k = 0;
+                foreach (var d in data)
+                {
+                    lines[k, i * 2] = d.A.ToString();
+                    lines[k, i * 2 + 1] = d.sig_weight.ToString();
+                    k++;
+                }
+            }
+            File.AppendAllText(@"F:\meshtime.dat", Environment.NewLine + Environment.NewLine + Environment.NewLine);
+
+            for (int i = 0; i < 1000; i++)
+            {
+                var str = "";
+                for (int j = 0; j < 20; j++)
+                {
+                    str += lines[i, j] + "\t";
+                }
+                File.AppendAllText(@"F:\meshtime.dat", str + Environment.NewLine);
+            }
+            waitForm.Close();
+        }
+        private void calculationMeshDensity() 
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                var heat = densityCalculation(1.0E10);                
+            }
+            this.mainViewPanel.Controls.Clear();
+        }
+        private List<BaseAbundance> densityMeshCalculation(double time)
+        {
+            switch (methodComBox.Text)
+            {
+                case "MMPA": Reactor.MatExp = new Mmpa(); break;
+                case "CRAM": Reactor.MatExp = new Cram(); break;
+                case "PADE": Reactor.MatExp = new Pade(); break;
+            }
+            Reactor.MatExp.ExpStatusChangedEvent += MatExp_ExpStatusChangedEvent;
+            calculationStatus.Value = 0;
+            var densities = GetDensities(densityTextBox.Text);
+            if (densities.Count == 0)
+            {
+                MessageBox.Show("Установите начальную концентрацию изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            Reactor.SetDensityArray(densities);
+            time = time * 31536000;
+            Reactor.Calculate(time);
+            var data = new List<BaseAbundance>();
+            var nuclides = Reactor.DensityArray.NuclideDensities.OrderBy(x => x.Isotope.A)?.ToList();
+            foreach (var iso in nuclides)
+            {
+                var cs = 0.0;
+                try { cs = iso.Isotope.CrossSections[Constants.REACT.N_G].AvgCs; } catch (Exception) { }
+                if (iso.Isotope.HalfLife == 1.0E40 && iso.Density > 0.0)
+                {
+                    data.Add(new BaseAbundance()
+                    {
+                        Density = iso.Density,
+                        A = iso.Isotope.A,
+                        AvgCs = cs
+                    });
+                }
+            }
+            return data;
+            
+        }
+        private List<BaseAbundance> densityFluxMeshCalculation()
+        {
+            switch (methodComBox.Text)
+            {
+                case "MMPA": Reactor.MatExp = new Mmpa(); break;
+                case "CRAM": Reactor.MatExp = new Cram(); break;
+                case "PADE": Reactor.MatExp = new Pade(); break;
+            }
+            Reactor.MatExp.ExpStatusChangedEvent += MatExp_ExpStatusChangedEvent;
+            calculationStatus.Value = 0;
+            var densities = GetDensities(densityTextBox.Text);
+            if (densities.Count == 0)
+            {
+                MessageBox.Show("Установите начальную концентрацию изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            Reactor.SetDensityArray(densities);
+            var str = timesComBox.SelectedItem.ToString();
+            var timestr = radiationTimeTextBox.Text;
+            int scale;
+            try { scale = NuclearCalculation.Models.Globals.TimeScale[str]; } catch (Exception) { return null; }
+            double _time = Convert.ToDouble(timestr);
+            double time = _time * scale;
+            Reactor.Calculate(time);
+            var data = new List<BaseAbundance>();
+            var nuclides = Reactor.DensityArray.NuclideDensities.OrderBy(x => x.Isotope.A)?.ToList();
+            foreach (var iso in nuclides)
+            {
+                var cs = 0.0;
+                try { cs = iso.Isotope.CrossSections[Constants.REACT.N_G].AvgCs; } catch (Exception) { }
+                if (iso.Isotope.HalfLife == 1.0E40 && iso.Density > 0.0)
+                {
+                    data.Add(new BaseAbundance()
+                    {
+                        Density = iso.Density,
+                        A = iso.Isotope.A,
+                        AvgCs = cs
+                    });
+                }
+            }
+            return data;
+
+        }
+        private void heatDensity_Click(object sender, EventArgs e)
+        {
+            calculateHeatDensity();
+        }
+        private void calculateHeatDensity() 
+        {
+            double flux = 1.0E14;
+            var data = new List<BaseHeatDensity>();
+            var table = new HeatDensityDataTable("HeatDensity");
+            for (int i = 0; i < 16; i++)
+            {
+                buildBurnup(flux);
+                var heat = densityCalculation(1.0E10);
+                data.Add(new BaseHeatDensity()
+                {
+                    NeutronFlux = flux,
+                    HeatDensity = heat
+                });
+                flux *= 10;
+            }
+            table.FillTable(data);
+            var dataGraphView = new DataGraphView<BaseHeatDensity>(table);
+            this.mainViewPanel.Controls.Clear();
+            this.mainViewPanel.Controls.Add(dataGraphView);
+            dataGraphView.Dock = DockStyle.Fill;
+        }
         private void buildBurnup()
         {
             IsBurnupSet = false;
 
-            var flux = getText(fluxTextBox.Text, "Поток нейтронов");
+            var flux = getText(neutronFluxTxt.Text, "Поток нейтронов");
             var temp = getText(temperTextBox.Text, "Температура");
             var kt = getText(txtBoxKt.Text, "kT");
             var neutronSpectra = new NeutronSpectra(flux, temp);
@@ -141,7 +335,7 @@ namespace KazNuclide.Views
                 MessageBox.Show("Установите какие диапазон изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //isotopes.RemoveAll(x => x.HalfLife <= 1000000.0);
+            isotopes.RemoveAll(x => x.HalfLife <= 1000.0);
             Reactor.SetIsotopesFlux(isotopes, neutronSpectra, dataLib, kt);
 
             /*var  iso1 = Reactor.BurnUp.Isotopes.FirstOrDefault(x => x.Name == "Tl-206");  iso1.HalfLife = 2.52E2;    iso1.CrossSections[Constants.REACT.N_G].AvgCs = 0.0;
@@ -159,16 +353,43 @@ namespace KazNuclide.Views
             var iso13 = Reactor.BurnUp.Isotopes.FirstOrDefault(x => x.Name == "Bi-211");  iso13.HalfLife = 1.28E2;  iso13.CrossSections[Constants.REACT.N_G].AvgCs = 0.0;
             var iso14 = Reactor.BurnUp.Isotopes.FirstOrDefault(x => x.Name == "Po-210");  iso14.HalfLife = 1.2E7;   iso14.CrossSections[Constants.REACT.N_G].AvgCs = 0.030174702;
             var iso15 = Reactor.BurnUp.Isotopes.FirstOrDefault(x => x.Name == "Po-211");  iso15.HalfLife = 5.16E-1; //iso15.CrossSections[Constants.REACT.N_G].AvgCs = 0.0;
+            
+            Reactor.BurnUp.SetBurnMatrix();
+            CalculationView.PrintMatrix<double>(terminal, Reactor.BurnUp.Matrix);
             */
-            //Reactor.BurnUp.setCaptureProbabilityMatrix();
-            //Reactor.BurnUp.setDecayProbabilityMatrix();
-            //Reactor.BurnUp.SetBurnMatrix();
-            //CalculationView.PrintMatrix<double>(terminal, Reactor.BurnUp.Matrix);
             IsBurnupSet = true;
         }
 
+        private void buildBurnup(double flux)
+        {
+            IsBurnupSet = false;
+
+            var temp = getText(temperTextBox.Text, "Температура");
+            var kt = getText(txtBoxKt.Text, "kT");
+            var neutronSpectra = new NeutronSpectra(flux, temp);
+            Constants.DATALIBS dataLib;
+            Enum.TryParse(comBoxDataLibs.SelectedValue.ToString(), out dataLib);
+
+            var isotopes = GetIsotopesRange(isotopesRange.Text);
+            if (isotopes.Count == 0) isotopes = GetIsotopesList(isotopesList.Text);
+            if (isotopes.Count == 0)
+            {
+                MessageBox.Show("Установите какие диапазон изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Reactor.SetIsotopesFlux(isotopes, neutronSpectra, dataLib, kt);
+
+            IsBurnupSet = true;
+        }
         private void densityCalculation()
         {
+            switch (methodComBox.Text)
+            {
+                case "MMPA": Reactor.MatExp = new Mmpa();break;                    
+                case "CRAM": Reactor.MatExp = new Cram();break;                    
+                case "PADE": Reactor.MatExp = new Pade();break;                    
+            }
+            Reactor.MatExp.ExpStatusChangedEvent += MatExp_ExpStatusChangedEvent;
             calculationStatus.Value = 0;
             var densities = GetDensities(densityTextBox.Text);
             if (densities.Count == 0)
@@ -201,7 +422,7 @@ namespace KazNuclide.Views
                         Density = iso.Density,
                         AvgCs = cs,                        
                         AtomicWeight = iso.AtomicWeight,
-                        Zaid = iso.Isotope.ZAID,
+                        A = iso.Isotope.A,
                         HalfLife = iso.Isotope.HalfLife
                     });
                 }
@@ -213,6 +434,37 @@ namespace KazNuclide.Views
             }
         }
 
+        private double densityCalculation(double _time)
+        {
+            calculationStatus.Value = 0;
+            var densities = GetDensities(densityTextBox.Text);
+            if (densities.Count == 0)
+            {
+                MessageBox.Show("Установите начальную концентрацию изотопов", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0.0;
+            }
+            Reactor.SetDensityArray(densities);
+            double heatDensity = 0.0;
+
+            if (!string.IsNullOrWhiteSpace(radiationTimeTextBox.Text))
+            {
+                var str = timesComBox.SelectedItem.ToString();
+                int scale;
+                try { scale = NuclearCalculation.Models.Globals.TimeScale[str]; } catch (Exception) { return 0.0; }
+                double time = _time * scale;
+                Reactor.Calculate(time);
+                foreach (var iso in Reactor.DensityArray.NuclideDensities)
+                {
+                    double decen = 0.0;
+                    foreach (var dec in iso.Isotope.Decays)
+                    {
+                        decen += dec.Value.DecayEnergy * dec.Value.DecayProb;              
+                    }
+                    heatDensity += decen * iso.Isotope.DecayConst * iso.Density;
+                }
+            }
+            return heatDensity;
+        }
         public static void PrintMatrix<T>(RichTextBox richTextBox, Matrix<T> matrix) where T:struct
         {
             string str = "";
@@ -227,10 +479,13 @@ namespace KazNuclide.Views
             richTextBox.Text = str;
         }
         private void txtBoxKt_TextChanged(object sender, EventArgs e)
-        {
-           var kt = getText(txtBoxKt.Text, "kT");
+        {           
+            var kt = getText(txtBoxKt.Text, "kT");
+            var flux = getText(fluxTextBox.Text, "flux");
+            var vel = Math.Sqrt(2 * kt * 1000 * Constants.q_electron / 1.6749E-27) * 100;
             var t = NuclearData.Constants.q_electron * kt * 1.0e3 / (NuclearData.Constants.k);
             temperTextBox.Text = string.Format(t + "", "D2");
+            neutronFluxTxt.Text = string.Format(flux * vel + "", "D1").Replace(',','.');
         }      
 
         private void isotopesRange_TextChanged(object sender, EventArgs e)
@@ -254,6 +509,14 @@ namespace KazNuclide.Views
                 totIsotopes.Text = isotopes.Count + "";
             }
             catch (Exception) { totIsotopes.Text = "0"; }
+        }
+
+        private void fluxTextBox_TextChanged(object sender, EventArgs e)
+        {
+            var kt = getText(txtBoxKt.Text, "kT");
+            var flux = getText(fluxTextBox.Text, "flux");
+            var vel = Math.Sqrt(2 * kt * 1000 * Constants.q_electron / 1.6749E-27) * 100;
+            neutronFluxTxt.Text = string.Format(flux * vel + "", "D1").Replace(',', '.');
         }
     }
 }

@@ -12,8 +12,6 @@ namespace NuclearCalculation.Models
     {
         public List<Isotope> Isotopes { get; set; }
         public Matrix<double> Matrix { get; set; }
-        public Matrix<double> DecayProbability { get; set; }
-        public Matrix<double> CaptureProbability { get; set; }
         public NeutronSpectra NeutronSpectra { get; set; }
         public List<Macs> MacsList { get; set; }
         public BurnUp(List<Isotope> isotopes, NeutronSpectra neutronSpectra)
@@ -43,10 +41,6 @@ namespace NuclearCalculation.Models
         private void initilaize(int count)
         {
             Matrix = new MatrixDouble(count, count);
-            //DecayProbability = new MatrixDouble(count, count);
-            //CaptureProbability = new MatrixDouble(count, count);
-            //setDecayProbabilityMatrix();
-            //setCaptureProbabilityMatrix();
             SetBurnMatrix();
         }
 
@@ -87,7 +81,7 @@ namespace NuclearCalculation.Models
                         Matrix.Arr[i, iAlfa] += Isotopes[iAlfa].DecayConst * prob;
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception) { }
                 try
                 {
                     if (iBeta != -1)
@@ -96,7 +90,7 @@ namespace NuclearCalculation.Models
                         Matrix.Arr[i, iBeta] += Isotopes[iBeta].DecayConst * prob;
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception) { }
                 try
                 {
                     if (iEcup != -1)
@@ -105,64 +99,20 @@ namespace NuclearCalculation.Models
                         Matrix.Arr[i, iEcup] += Isotopes[iEcup].DecayConst * prob;
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception) { }
                 try 
                 {
                     if (iCapt != -1)
-                    {                         
+                    {
                         Matrix.Arr[i, iCapt] += NeutronSpectra.Flux * Isotopes[iCapt].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn;                        
                     }
                 }            
-                catch (Exception ex) { }
+                catch (Exception) { }
 
-                try { Matrix.Arr[i, i] += -NeutronSpectra.Flux * Isotopes[i].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn; } catch (Exception ex) { }
+                try { Matrix.Arr[i, i] += -NeutronSpectra.Flux * Isotopes[i].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn; } catch (Exception) { }
                 Matrix.Arr[i, i] += -Isotopes[i].DecayConst;
             }
-        }
-        public void setDecayProbabilityMatrix()
-        {
-            for (int i = 0; i < Isotopes.Count; i++)
-            {
-                int iAlfa = Isotopes.FindIndex(x => x.A == Isotopes[i].A + 4 && x.Z == Isotopes[i].Z + 2);
-                int iBeta = Isotopes.FindIndex(x => x.A == Isotopes[i].A     && x.Z == Isotopes[i].Z - 1);
-                int iEcup = Isotopes.FindIndex(x => x.A == Isotopes[i].A     && x.Z == Isotopes[i].Z + 1);
-
-                try 
-                {
-                    if (iAlfa != -1)
-                    {
-                        DecayProbability.Arr[i, iAlfa] = Isotopes[iAlfa].Decays[Constants.RTYPE.ALFA].DecayProb;
-                    }
-                } 
-                catch (Exception ex) { }
-                try 
-                {
-                    if (iBeta != -1)
-                    {
-                        DecayProbability.Arr[i, iBeta] = Isotopes[iBeta].Decays[Constants.RTYPE.BETA].DecayProb;
-                    }
-                } 
-                catch (Exception ex) { }
-                try 
-                {
-                    if (iEcup != -1)
-                    {
-                        DecayProbability.Arr[i, iEcup] = Isotopes[iEcup].Decays[Constants.RTYPE.EC].DecayProb;
-                    }
-                } 
-                catch (Exception ex) { }
-            }
-
-        }
-        public void setCaptureProbabilityMatrix()
-        {
-            for (int i = 0; i < Isotopes.Count; i++)
-            {
-                int index = Isotopes.FindIndex(x => x.A == Isotopes[i].A - 1 && x.Z == Isotopes[i].Z);
-                if (index != -1)
-                    try { if (Isotopes[index].CrossSections[Constants.REACT.N_G].AvgCs != 0.0) CaptureProbability.Arr[i, index] = 1.0; } catch(Exception ex) { }
-            }
-        }
+        }        
         public void SetBurnMatrix_old()
         {
             Matrix.Zero();
@@ -170,10 +120,10 @@ namespace NuclearCalculation.Models
             {
                 for (int j = 0; j < Isotopes.Count; j++)
                 {
-                    if (DecayProbability.Arr[i, j] != 0.0)
-                        Matrix.Arr[i, j] += Isotopes[j].DecayConst;
-                    if (CaptureProbability.Arr[i, j] != 0.0)
-                        Matrix.Arr[i, j] += NeutronSpectra.Flux * Isotopes[j].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn;
+                    //if (DecayProbability.Arr[i, j] != 0.0)
+                      //  Matrix.Arr[i, j] += Isotopes[j].DecayConst;
+                    //if (CaptureProbability.Arr[i, j] != 0.0)
+                      //  Matrix.Arr[i, j] += NeutronSpectra.Flux * Isotopes[j].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn;
                 }
                 try { Matrix.Arr[i, i] += -NeutronSpectra.Flux * Isotopes[i].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn; } catch (Exception ex) { }
                 Matrix.Arr[i, i] += -Isotopes[i].DecayConst;

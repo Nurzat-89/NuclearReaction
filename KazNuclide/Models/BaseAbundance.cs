@@ -10,6 +10,7 @@ namespace KazNuclide.Models
     {
         public string IsotopeName { get; set; }
         public int Zaid { get; set; }
+        public int A { get; set; }
         public double Density { get; set; }
         public double AvgCs { get; set; }
         public double sig_weight => AvgCs * Density;

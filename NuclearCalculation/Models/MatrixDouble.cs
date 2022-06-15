@@ -110,14 +110,13 @@ namespace NuclearCalculation.Models
             result = this * result;
             return result;
         }
-
         public override Matrix<double> Inverse()
         {
             Matrix<double> X = new MatrixDouble(Col, Row);
             X.Arr = Accord.Math.Matrix.Inverse(Arr);
             return X;
         }
-        public Matrix<double> InverseOld()
+        public  Matrix<double> InverseOld()
         {
             Matrix<double> X = new MatrixDouble(Col, Row);
             Matrix<double> E = new MatrixDouble(Col, Row);

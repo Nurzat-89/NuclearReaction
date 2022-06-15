@@ -130,7 +130,7 @@ namespace NuclearCalculation.Models
             X.Arr = matrix.ToArray();
             return X;
         }
-        public  Matrix<Complex> InverseOld()
+        public Matrix<Complex> InverseOld()
         {
             Matrix<Complex> X = new MatrixComplex(Col, Row);
             Matrix<Complex> E = new MatrixComplex(Col, Row);

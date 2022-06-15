@@ -31,19 +31,6 @@ namespace NuclearCalculation.Models
                 var str = "";
                 N = N + _n;
                 ExpStatusChangedEvent?.Invoke((int)(i * dx));
-                //if (i == 1)
-                //{
-                //    for (int k = 0; k < temp1.Col; k++)
-                //    {
-                //        for (int j = 0; j < temp1.Row; j++)
-                //        {
-                //            str += temp1.Arr[k, j].Real + "  " + temp1.Arr[k, j].Imaginary + "\t";
-                //        }
-                //        str += "\n";
-                //    }
-                //    str += "\n";
-                //    File.AppendAllText("F://testmatrix.txt", str);
-                //}
             }
             Matrix<double> result = N.Cast<double>();
             result *= 2;
